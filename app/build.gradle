@@ -12,6 +12,8 @@ android {
         versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        dataBinding.enabled true
     }
 
     buildTypes {
@@ -32,7 +34,18 @@ dependencies {
     implementation rootProject.ext.implementations["appcompat"]
     implementation rootProject.ext.implementations["design"]
     implementation 'com.jakewharton:butterknife:10.2.3'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+//    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation 'com.github.ydslib:MultiImageView:1.0.4'
+    implementation 'com.alibaba:fastjson:1.2.61'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.youth.banner:banner:2.1.0'
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'
 //    implementation rootProject.ext.implementations["navigation-dynamic-features-fragment"]
     implementation project(":mylibrary")
 
