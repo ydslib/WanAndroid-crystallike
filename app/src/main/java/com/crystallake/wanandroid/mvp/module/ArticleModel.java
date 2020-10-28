@@ -19,10 +19,8 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.crystallake.mylibrary.net.common.ResponseObserver;
-import com.crystallake.mylibrary.utils.RxUtil;
-import com.crystallake.wanandroid.net.RetrofitHelper;
-import com.crystallake.wanandroid.request.ArticleWrapper;
+import com.crystallake.wanandroid.request.ArticleBean;
+import com.crystallake.wanandroid.request.BaseArticleData;
 import com.crystallake.wanandroid.request.WxArticleAuthor;
 import com.crystallake.wanandroid.utils.AssetsUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -31,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleModel extends ViewModel {
-    private MutableLiveData<ArticleWrapper.DataBean> mArticalDataBean;
+    private MutableLiveData<ArticleBean.DataBean> mArticalDataBean;
 //    private MutableLiveData<String> mImageUrl;
     private String name;
     private RxFragment mFragment;
@@ -45,15 +43,15 @@ public class ArticleModel extends ViewModel {
         return name;
     }
 
-    public MutableLiveData<ArticleWrapper.DataBean> getArticleDataBean() {
+    public MutableLiveData<ArticleBean.DataBean> getArticleDataBean() {
         if (mArticalDataBean == null) {
             mArticalDataBean = new MutableLiveData<>();
         }
         return mArticalDataBean;
     }
 
-    public List<ArticleWrapper.DataBean.DatasBean> getDatasBean(){
-        ArticleWrapper.DataBean dataBean = mArticalDataBean.getValue();
+    public List<BaseArticleData> getDatasBean(){
+        ArticleBean.DataBean dataBean = mArticalDataBean.getValue();
         if (dataBean==null){
             return new ArrayList<>();
         }
@@ -80,16 +78,16 @@ public class ArticleModel extends ViewModel {
         return mImageUrl;
     }
 
-    public void getWxAuthorData() {
-        RetrofitHelper.getApiService()
-                .getArticle()
-                .compose(RxUtil.rxSchedulerHelper(mFragment, true))
-                .subscribe(new ResponseObserver<ArticleWrapper>() {
-                    @Override
-                    public void onSuccess(ArticleWrapper response) {
-                        mArticalDataBean.setValue(response.getData());
-                    }
-                });
-    }
+//    public void getWxAuthorData() {
+//        RetrofitHelper.getApiService()
+//                .getArticle()
+//                .compose(RxUtil.rxSchedulerHelper(mFragment, true))
+//                .subscribe(new ResponseObserver<ArticleWrapper>() {
+//                    @Override
+//                    public void onSuccess(ArticleWrapper response) {
+//                        mArticalDataBean.setValue(response.getData());
+//                    }
+//                });
+//    }
 }
     

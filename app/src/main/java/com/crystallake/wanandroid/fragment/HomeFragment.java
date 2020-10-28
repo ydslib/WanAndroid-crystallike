@@ -5,35 +5,45 @@
 package com.crystallake.wanandroid.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crystallake.mylibrary.net.common.ResponseObserver;
-import com.crystallake.mylibrary.utils.RxUtil;
 import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.adapter.ArticleAdapter;
+import com.crystallake.wanandroid.adapter.ImageAdapter;
 import com.crystallake.wanandroid.base.BaseFragment;
-import com.crystallake.wanandroid.mvp.module.ArticleModel;
-import com.crystallake.wanandroid.net.RetrofitHelper;
-import com.crystallake.wanandroid.request.ArticleWrapper;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.crystallake.wanandroid.mvp.module.HomeModel;
+import com.crystallake.wanandroid.request.BannerBean;
+import com.crystallake.wanandroid.request.BaseArticleData;
+import com.crystallake.wanandroid.utils.SmartRefreshUtils;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.youth.banner.Banner;
+import com.youth.banner.indicator.CircleIndicator;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeFragment extends RxFragment {
+public class HomeFragment extends BaseFragment {
+    private static final int PAGE_START = 0;
+    private HomeModel mHomeModel;
+    private ImageAdapter mBannerAdapter;
+    private SmartRefreshUtils mRefreshUtils;
+    private int mCurPage = PAGE_START;
 
-    ArticleModel mArticleModel;
+    @BindView(R.id.recycler_view_home)
+    RecyclerView mHomeRecycler;
+
+    @BindView(R.id.banner_home)
+    Banner mBanner;
+
+    @BindView(R.id.smart_refresh_home)
+    SmartRefreshLayout mRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,31 +51,43 @@ public class HomeFragment extends RxFragment {
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        mHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-
-//        mHomeBinding = DataBindingUtil.setContentView(this.getActivity(),R.layout.fragment_home);
-//        ArticleModel wxArticleModel = new ViewModelProvider.NewInstanceFactory().create(ArticleModel.class);
-//        wxArticleModel.setFragment(this);
-//        mArticleModel = new ViewModelProvider.NewInstanceFactory().create(ArticleModel.class);
-//        mArticleModel.getWxAuthorData();
-//        mArticleModel.getArticleDataBean().observe(getActivity(), new Observer<ArticleWrapper.DataBean>() {
-//            @Override
-//            public void onChanged(ArticleWrapper.DataBean dataBean) {
-//                mHomeBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//                ArticleAdapter articleAdapter = new ArticleAdapter(HomeFragment.this.getContext(), dataBean.getDatas());
-//                mHomeBinding.recyclerView.setAdapter(articleAdapter);
-//            }
-//        });
-//        mHomeBinding.setLifecycleOwner(this);
-        View view = inflater.inflate(R.layout.fragment_home,container,false);
-        init(view);
-        return view;
+    public void onResume() {
+        super.onResume();
+        mBanner.start();
     }
 
-    public void init(View view) {
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBanner.stop();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+
+
+    @Override
+    public void init() {
+        mHomeModel = new ViewModelProvider(this).get(HomeModel.class);
+        mHomeModel.getBannerData();
+        mHomeModel.getArticleData(new WeakReference<>(this), 0);
+
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        mHomeRecycler.setLayoutManager(manager);
+
+        getArticleData();
+        mRefreshUtils = SmartRefreshUtils.with(mRefreshLayout);
+        mRefreshUtils.pureScrollMode();
+        mRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
+            @Override
+            public void onRefresh() {
+                mCurPage = PAGE_START;
+                getArticleData();
+            }
+        });
 
 
 //        wxArticleModel.getWxAuthorData();
@@ -99,6 +121,24 @@ public class HomeFragment extends RxFragment {
 //        });
     }
 
+    private void getArticleData(){
+        mHomeModel.getMutableLiveData().observe(getActivity(), new Observer<BannerBean>() {
+            @Override
+            public void onChanged(BannerBean bannerBean) {
+                mBannerAdapter = new ImageAdapter(getActivity(), bannerBean.getData());
+                mBanner.setAdapter(mBannerAdapter);
+                mBanner.setIndicator(new CircleIndicator(getActivity())).start();
+            }
+        });
+        mHomeModel.getArticleWrapperMutableLiveData().observe(getActivity(), new Observer<List<BaseArticleData>>() {
+            @Override
+            public void onChanged(List<BaseArticleData> articleBean) {
+                ArticleAdapter articleAdapter = new ArticleAdapter(getActivity(), articleBean);
+                mHomeRecycler.setAdapter(articleAdapter);
+            }
+        });
+    }
+
 //    public void getWxAuthorData() {
 //        RetrofitHelper.getApiService()
 //                .getWxAuthor()
@@ -111,18 +151,18 @@ public class HomeFragment extends RxFragment {
 //                });
 //    }
 
-    /**
-     * Get请求
-     */
-    public void getData() {
-        RetrofitHelper.getApiService()
-                .getArticle()
-                .compose(RxUtil.rxSchedulerHelper(this, true))
-                .subscribe(new ResponseObserver<ArticleWrapper>() {
-                    @Override
-                    public void onSuccess(ArticleWrapper response) {
-                        System.out.println(response.getData().getCurPage());
-                    }
-                });
-    }
+//    /**
+//     * Get请求
+//     */
+//    public void getData() {
+//        RetrofitHelper.getApiService()
+//                .getArticle()
+//                .compose(RxUtil.rxSchedulerHelper(this, true))
+//                .subscribe(new ResponseObserver<ArticleWrapper>() {
+//                    @Override
+//                    public void onSuccess(ArticleWrapper response) {
+//                        System.out.println(response.getData().getCurPage());
+//                    }
+//                });
+//    }
 }

@@ -19,8 +19,6 @@ import com.crystallake.wanandroid.fragment.HomeFragment;
 import com.crystallake.wanandroid.fragment.MeFragment;
 import com.crystallake.wanandroid.fragment.MessageFragment;
 import com.crystallake.wanandroid.net.RetrofitHelper;
-import com.crystallake.wanandroid.request.ArticleWrapper;
-import com.crystallake.wanandroid.request.WxArticleAuthor;
 import com.crystallake.wanandroid.response.LoginResponse;
 import com.google.android.material.tabs.TabLayout;
 

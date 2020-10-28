@@ -35,10 +35,12 @@ dependencies {
     api rootProject.ext.implementations["adapter-rxjava2"]
     api rootProject.ext.implementations["rxjava2"]
     api rootProject.ext.implementations["rxlifecycle-components"]
-    api rootProject.ext.implementations["rxlifecycle"]
+//    api rootProject.ext.implementations["rxlifecycle"]
     api rootProject.ext.implementations["retrofit2-rxjava2-adapter"]
     api rootProject.ext.implementations["rxandroid"]
     api rootProject.ext.implementations["logging-interceptor"]
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
     testImplementation rootProject.ext.testImplementations["junit"]
     androidTestImplementation rootProject.ext.androidTestImplementations["junit"]
     androidTestImplementation rootProject.ext.androidTestImplementations["espresso-core"]

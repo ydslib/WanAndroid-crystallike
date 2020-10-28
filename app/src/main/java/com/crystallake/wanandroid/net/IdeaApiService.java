@@ -1,7 +1,9 @@
 package com.crystallake.wanandroid.net;
 
 
-import com.crystallake.wanandroid.request.ArticleWrapper;
+import com.crystallake.wanandroid.request.ArticleBean;
+import com.crystallake.wanandroid.request.BannerBean;
+import com.crystallake.wanandroid.request.TopArticleBean;
 import com.crystallake.wanandroid.request.WxArticleAuthor;
 import com.crystallake.wanandroid.response.LoginResponse;
 
@@ -13,6 +15,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by dell on 2017/4/1.
@@ -21,11 +24,15 @@ import retrofit2.http.POST;
 public interface IdeaApiService {
 
     /**
-     * 首页文章列表
+     * 首页列表
      */
-    @GET("article/list/0/json")
-    Observable<ArticleWrapper> getArticle();
-
+    @GET("article/list/{curPage}/json")
+    Observable<ArticleBean> getArticle(@Path("curPage") int curPage);
+    /**
+     *
+     */
+    @GET("article/top/json")
+    Observable<TopArticleBean> getTopArticle();
     /**
      * 登录 appId secret
      * 使用实体类作为参数
@@ -50,5 +57,11 @@ public interface IdeaApiService {
      */
     @GET("wxarticle/chapters/json")
     Observable<WxArticleAuthor> getWxAuthor();
+
+    /**
+     * 横幅轮播
+     */
+    @GET("banner/json")
+    Observable<BannerBean> getBannerBean();
 
 }

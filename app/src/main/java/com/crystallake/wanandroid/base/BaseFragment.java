@@ -4,6 +4,7 @@
  */
 package com.crystallake.wanandroid.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends RxFragment {
+    Context mContext;
     Unbinder mUnbinder;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +33,11 @@ public abstract class BaseFragment extends RxFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(),container,false);
         mUnbinder = ButterKnife.bind(this,view);
+        if (isAdded()){
+            mContext = getActivity();
+        }else{
+            mContext = getContext();
+        }
         init();
         return view;
     }

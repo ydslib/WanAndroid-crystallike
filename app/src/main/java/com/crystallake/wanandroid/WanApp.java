@@ -7,11 +7,14 @@ package com.crystallake.wanandroid;
 import android.app.Application;
 
 import com.crystallake.mylibrary.utils.Utils;
+import com.hjq.bar.TitleBar;
+import com.hjq.bar.initializer.LightBarInitializer;
 
 public class WanApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
         Utils.init(this);
+        TitleBar.setDefaultInitializer(new LightBarInitializer());
     }
 }
