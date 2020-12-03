@@ -8,17 +8,17 @@ import com.crystallake.basic.base.mvp.model.IModel;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.basic.base.mvp.view.IView;
 
-public interface ArticleListContract {
+public interface UserArticleContract {
 
-    interface ArticleListView extends IView{
-
-    }
-
-    interface ArticleListPresenter extends IPresenter<ArticleListView>{
+    interface UserArticleView extends IView{
 
     }
 
-    interface ArticleListModel extends IModel{
+    interface UserArticlePresenter extends IPresenter<UserArticleView>{
+
+    }
+
+    interface UserArticleModel extends IModel{
 
     }
 }

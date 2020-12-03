@@ -32,6 +32,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(":basic")
     implementation 'com.jakewharton:butterknife:10.2.3'
+    // 完全引入
+    implementation 'com.github.goweii:ActionBarEx:3.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

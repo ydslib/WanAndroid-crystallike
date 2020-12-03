@@ -1,10 +1,32 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ActionBar">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="ab_immersion">immersed</item>
+        <item name="android:background">@color/action_bar_bg</item>
+        <item name="ab_bottomLineHeight">@dimen/divide_line_height_zero</item>
+        <item name="ab_statusBarColor">@color/transparent</item>
+        <item name="ab_titleBarHeight">@dimen/bottom_bar_height</item>
+    </style>
+
+    <style name="ActionBar.Common">
+        <item name="abc_titleTextColor">@color/text_white</item>
+        <item name="abc_leftIconColor">@color/text_white</item>
+        <item name="abc_leftIconPadding">@dimen/padding_left_13dp</item>
+        <item name="abc_leftIconMarginLeft">@dimen/margin_left_3dp</item>
+        <item name="abc_leftTextColor">@color/text_white</item>
+        <item name="abc_rightIconColor">@color/text_white</item>
+        <item name="abc_rightIconMarginRight">@dimen/margin_right_3dp</item>
+        <item name="abc_rightIconPadding">@dimen/padding_right_13dp</item>
+        <item name="abc_rightTextColor">@color/text_white</item>
     </style>
 
 </resources>

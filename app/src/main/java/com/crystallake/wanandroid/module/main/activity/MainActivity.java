@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.crystallake.appbase.R;
 import com.crystallake.basic.base.activity.BaseMvpActivity;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
-import com.crystallake.wanandroid.module.main.fragment.ArticleListFragment;
+import com.crystallake.wanandroid.module.main.fragment.UserArticleFragment;
 import com.crystallake.wanandroid.module.main.fragment.MainFragment;
 import com.crystallake.wanandroid.module.main.mvp.contract.MainContract;
 import com.crystallake.wanandroid.module.main.mvp.presenter.MainPresenter;
@@ -35,7 +35,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter>
     protected void initView(Bundle savedInstanceState) {
         mViewPager.addOnPageChangeListener(this);
         FixedFragmentPagerAdapter adapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.setFragments(ArticleListFragment.create(), MainFragment.create());
+        adapter.setFragments(UserArticleFragment.create(), MainFragment.create());
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(1);
     }

@@ -6,5 +6,5 @@ package com.crystallake.wanandroid.module.main.mvp.model;
 
 import com.crystallake.basic.base.mvp.model.BaseModel;
 
-public class ArticleListModel extends BaseModel {
+public class UserArticleModel extends BaseModel {
 }
