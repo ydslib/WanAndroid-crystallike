@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.viewpager.widget.ViewPager
+    android:id="@+id/main_view_pager"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.crystallake.wanandroid.module.main.activity.MainActivity"
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    >
 
-    <Button
-        android:id="@+id/demo_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DemoActivity"
-        android:onClick="startDemoActivity"/>
-
-</LinearLayout>
+</androidx.viewpager.widget.ViewPager>

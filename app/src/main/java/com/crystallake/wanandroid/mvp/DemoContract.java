@@ -2,7 +2,7 @@
  * Created by : yds
  * Time: 2020-11-22 10:51 PM
  */
-package com.crystallake.appbase.mvp;
+package com.crystallake.wanandroid.mvp;
 
 import com.crystallake.basic.base.mvp.model.IModel;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;

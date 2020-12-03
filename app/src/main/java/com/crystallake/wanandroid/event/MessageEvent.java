@@ -1,4 +1,4 @@
-package com.crystallake.appbase.event;
+package com.crystallake.wanandroid.event;
 
 public class MessageEvent {
 

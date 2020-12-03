@@ -2,10 +2,10 @@
  * Created by : yds
  * Time: 2020-11-22 10:50 PM
  */
-package com.crystallake.appbase.mvp.presenter;
+package com.crystallake.wanandroid.mvp.presenter;
 
-import com.crystallake.appbase.mvp.DemoContract;
-import com.crystallake.appbase.mvp.model.DemoModel;
+import com.crystallake.wanandroid.mvp.DemoContract;
+import com.crystallake.wanandroid.mvp.model.DemoModel;
 import com.crystallake.basic.base.mvp.presenter.BasePresenter;
 
 public class DemoPresenter extends BasePresenter<DemoContract.Model, DemoContract.View> implements DemoContract.Presenter {
