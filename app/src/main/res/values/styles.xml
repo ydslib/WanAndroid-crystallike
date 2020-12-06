@@ -29,4 +29,19 @@
         <item name="abc_rightTextColor">@color/text_white</item>
     </style>
 
+    <style name="ActionBar.Common.Back">
+        <item name="abc_leftIconRes">@drawable/ic_back</item>
+        <item name="abc_leftIconMarginLeft">0dp</item>
+        <item name="abc_leftIconClickToFinish">true</item>
+    </style>
+
+    <style name="MultiStateView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="msv_errorView">@layout/layout_state_error</item>
+        <item name="msv_emptyView">@layout/layout_state_empty</item>
+        <item name="msv_loadingView">@layout/layout_state_loading</item>
+        <item name="msv_viewState">content</item>
+    </style>
+
 </resources>

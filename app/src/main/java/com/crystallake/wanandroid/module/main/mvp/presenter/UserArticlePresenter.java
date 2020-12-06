@@ -14,4 +14,9 @@ public class UserArticlePresenter extends BasePresenter<UserArticleModel, UserAr
     protected UserArticleModel createModel() {
         return new UserArticleModel();
     }
+
+    @Override
+    public void getUserArticleList(int page, boolean refresh) {
+        getView().getUserArticleListSuccess(0, null);
+    }
 }

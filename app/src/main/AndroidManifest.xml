@@ -17,6 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.crystallake.wanandroid.module.main.activity.ShareArticleActivity"/>
     </application>
 
 </manifest>

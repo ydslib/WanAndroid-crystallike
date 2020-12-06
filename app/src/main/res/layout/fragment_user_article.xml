@@ -6,9 +6,27 @@
     android:orientation="vertical">
 
     <per.goweii.actionbarex.common.ActionBarCommon
+        android:id="@+id/action_bar_user_article"
         style="@style/ActionBar.Common"
         app:abc_rightIconRes="@mipmap/ic_add"
         app:abc_titleText="广场"
         />
+
+    <com.kennyc.view.MultiStateView
+        android:id="@+id/multi_state_view_ua"
+        style="@style/MultiStateView">
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh_ua"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_ua"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </com.kennyc.view.MultiStateView>
 
 </LinearLayout>

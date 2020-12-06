@@ -4,6 +4,7 @@
  */
 package com.crystallake.basic.base.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -57,6 +58,12 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFrag
             mPresenter.detachView();
         }
         mPresenter = null;
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 
     @Override

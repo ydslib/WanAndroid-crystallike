@@ -1,2 +1,3 @@
-# AppBase
-App的base
+# WanAndroid
+1 MVP
+2 retrofit+rxjava
