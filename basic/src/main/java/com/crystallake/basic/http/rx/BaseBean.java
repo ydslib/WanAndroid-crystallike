@@ -1,4 +1,4 @@
-package com.crystallake.basic.bean;
+package com.crystallake.basic.http.rx;
 
 import java.io.Serializable;
 

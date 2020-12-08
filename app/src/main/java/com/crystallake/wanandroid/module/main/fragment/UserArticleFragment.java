@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.crystallake.appbase.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
+import com.crystallake.wanandroid.http.response.WanResponse;
 import com.crystallake.wanandroid.module.main.activity.ShareArticleActivity;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.module.main.mvp.contract.UserArticleContract;
@@ -92,13 +93,14 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
     }
 
     @Override
-    public void getUserArticleListSuccess(int code, ArticleListBean data) {
-        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
+    public void getUserArticleListSuccess(int code, WanResponse<ArticleListBean> data) {
+        System.out.println(data.getData().toJson());
+//        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
     }
 
     @Override
     public void getUserArticleListFailed(int code, String msg) {
-        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
+//        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
     }
 
     @Override

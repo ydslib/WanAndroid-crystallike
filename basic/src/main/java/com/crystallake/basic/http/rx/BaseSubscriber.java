@@ -3,7 +3,6 @@ package com.crystallake.basic.http.rx;
 
 import com.crystallake.basic.app.BaseApp;
 import com.crystallake.basic.base.mvp.view.IView;
-import com.crystallake.basic.bean.BaseBean;
 import com.crystallake.basic.http.HttpStatus;
 import com.crystallake.basic.http.exception.ExceptionHandle;
 import com.crystallake.basic.utils.NetworkUtil;
