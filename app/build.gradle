@@ -33,7 +33,9 @@ dependencies {
     implementation project(":basic")
     implementation 'com.jakewharton:butterknife:10.2.3'
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'
     implementation  'androidx.recyclerview:recyclerview:1.1.0'
+    implementation  "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2"
     // 完全引入
     implementation 'com.github.goweii:ActionBarEx:3.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'

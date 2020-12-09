@@ -4,6 +4,8 @@
  */
 package com.crystallake.wanandroid.module.main.mvp.presenter;
 
+import android.util.Log;
+
 import com.crystallake.basic.base.mvp.presenter.BasePresenter;
 import com.crystallake.basic.http.function.RetryWithDelay;
 import com.crystallake.wanandroid.http.response.WanResponse;
@@ -27,30 +29,33 @@ public class UserArticlePresenter extends BasePresenter<UserArticleModel, UserAr
     @Override
     public void getUserArticleList(int page, boolean refresh) {
         getModel().getUserArticleList(page,refresh)
-                .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Throwable {
-                        getView().showLoading();
+                        if (!refresh){
+                            getView().showLoading();
+                        }
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        getView().hideLoading();
+                        if (!refresh){
+                            getView().hideLoading();
+                        }
                     }
-                }).compose(getView().<WanResponse<ArticleListBean>>bindToLife())
+                }).compose(getView().<ArticleListBean>bindToLife())
                 .retryWhen(new RetryWithDelay())
-                .subscribe(new Consumer<WanResponse<ArticleListBean>>() {
+                .subscribe(new Consumer<ArticleListBean>() {
                     @Override
-                    public void accept(WanResponse<ArticleListBean> articleListBean) throws Throwable {
+                    public void accept(ArticleListBean articleListBean) throws Throwable {
                         getView().getUserArticleListSuccess(0, articleListBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Throwable {
-
+                        Log.d("UserArticlePresenter",throwable.getMessage());
+                        getView().showErrorMsg("未知错误");
                     }
                 });
     }

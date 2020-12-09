@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.Observable;
 public interface UserArticleContract {
 
     interface UserArticleView extends IView{
-        void getUserArticleListSuccess(int code,WanResponse<ArticleListBean> data);
+        void getUserArticleListSuccess(int code,ArticleListBean data);
         void getUserArticleListFailed(int code, String msg);
     }
 
@@ -24,6 +24,6 @@ public interface UserArticleContract {
     }
 
     interface UserArticleModel extends IModel{
-        Observable<WanResponse<ArticleListBean>> getUserArticleList(int page, boolean refresh);
+        Observable<ArticleListBean> getUserArticleList(int page, boolean refresh);
     }
 }

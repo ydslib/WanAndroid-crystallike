@@ -6,10 +6,12 @@ package com.crystallake.wanandroid.module.main.fragment;
 
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crystallake.appbase.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
+import com.crystallake.wanandroid.adapter.ArticleAdapter;
 import com.crystallake.wanandroid.http.response.WanResponse;
 import com.crystallake.wanandroid.module.main.activity.ShareArticleActivity;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
@@ -36,6 +38,8 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.recycler_view_ua)
     RecyclerView mRecyclerView;
+
+    private ArticleAdapter mArticleAdapter;
 
     private SmartRefreshUtil mSmartRefreshUtil;
     private int mCurrPage = PAGE_START;
@@ -66,6 +70,17 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
                     }
                 });
 
+        mSmartRefreshUtil.setLoadMoreListener(new SmartRefreshUtil.LoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                getProjectArticleList(true);
+            }
+        });
+
+        mArticleAdapter = new ArticleAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mArticleAdapter);
+
     }
 
     @Override
@@ -93,14 +108,27 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
     }
 
     @Override
-    public void getUserArticleListSuccess(int code, WanResponse<ArticleListBean> data) {
-        System.out.println(data.getData().toJson());
-//        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
+    public void getUserArticleListSuccess(int code, ArticleListBean data) {
+        System.out.println(data.toJson());
+        mCurrPage = data.getCurPage() + PAGE_START;
+        if (data.getCurPage() == 1) {
+            if (data.getDatas() == null || data.getDatas().isEmpty()) {
+                mMultiStateView.setViewState(MultiStateView.ViewState.EMPTY);
+            } else {
+                mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+                mArticleAdapter.setNewInstance(data.getDatas());
+            }
+        } else {
+            mArticleAdapter.addData(data.getDatas());
+        }
+        mSmartRefreshUtil.success();
     }
 
     @Override
     public void getUserArticleListFailed(int code, String msg) {
 //        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
+
+        mSmartRefreshUtil.fail();
     }
 
     @Override
@@ -110,5 +138,15 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
             mCurrPage = PAGE_START;
             getProjectArticleList(false);
         }
+    }
+
+    @Override
+    public void showLoading() {
+        mMultiStateView.setViewState(MultiStateView.ViewState.LOADING);
+    }
+
+    @Override
+    public void hideLoading() {
+        mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
     }
 }
