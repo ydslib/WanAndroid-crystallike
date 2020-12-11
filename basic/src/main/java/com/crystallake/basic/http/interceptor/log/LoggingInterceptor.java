@@ -27,7 +27,7 @@ public class LoggingInterceptor implements Interceptor {
         Request request = chain.request();
 
         Request.Builder requestBuilder = request.newBuilder();
-        requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36");
+        requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like_def Gecko) Chrome/50.0.2661.102 Safari/537.36");
         request = requestBuilder.build();
 
         final Response response = chain.proceed(request);

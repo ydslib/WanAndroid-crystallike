@@ -15,4 +15,16 @@
     <color name="main">#4282f4</color>
 
     <color name="text_third">#999999</color>
+
+    <color name="text_surface">#333333</color>
+    <color name="text_second">#666666</color>
+    <color name="accent">#f86734</color>
+    <color name="text_fourth">#cccccc</color>
+
+
+
+    <color name="f_font_light_gray">#DFDFDF</color>
+
+    <color name="tab_style">#EA6F5A</color>
+    <color name="text_gray">#A2A2A2</color>
 </resources>

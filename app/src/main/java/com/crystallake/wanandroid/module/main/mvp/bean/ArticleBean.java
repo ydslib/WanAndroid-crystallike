@@ -4,6 +4,8 @@
  */
 package com.crystallake.wanandroid.module.main.mvp.bean;
 
+import android.text.TextUtils;
+
 import com.crystallake.basic.wan.http.bean.BaseBean;
 
 import java.util.List;
@@ -56,12 +58,19 @@ public class ArticleBean extends BaseBean {
     private String desc;
     private String descMd;
     private String envelopePic;
+    /**
+     * 标识，是否是新文章
+     */
     private boolean fresh;
     private int id;
     private String link;
     private String niceDate;
     private String niceShareDate;
     private String origin;
+    /**
+     * 置顶
+     */
+    private boolean top;
     private String prefix;
     private String projectLink;
     private long publishTime;
@@ -77,6 +86,14 @@ public class ArticleBean extends BaseBean {
     private int visible;
     private int zan;
     private List<?> tags;
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
+    }
 
     public String getApkLink() {
         return apkLink;
@@ -95,7 +112,13 @@ public class ArticleBean extends BaseBean {
     }
 
     public String getAuthor() {
-        return author;
+        if (!TextUtils.isEmpty(author)){
+            return author;
+        }
+        if (!TextUtils.isEmpty(shareUser)){
+            return shareUser;
+        }
+        return "匿名";
     }
 
     public void setAuthor(String author) {

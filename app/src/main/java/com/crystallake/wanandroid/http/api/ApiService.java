@@ -18,6 +18,6 @@ public interface ApiService {
      * 可能出现返回列表数据<每页数据，因为有自见的文章被过滤掉了。
      * page 0开始
      */
-    @GET("/user_article/list/{page}/json")
+    @GET("user_article/list/{page}/json")
     Observable<WanResponse<ArticleListBean>> getUserArticleList(@Path("page") int page);
 }
