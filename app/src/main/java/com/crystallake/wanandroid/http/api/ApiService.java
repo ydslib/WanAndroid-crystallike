@@ -5,7 +5,10 @@
 package com.crystallake.wanandroid.http.api;
 
 import com.crystallake.wanandroid.http.response.WanResponse;
+import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
@@ -20,4 +23,19 @@ public interface ApiService {
      */
     @GET("user_article/list/{page}/json")
     Observable<WanResponse<ArticleListBean>> getUserArticleList(@Path("page") int page);
+
+    /**
+     * 置顶文章
+     * 方法：GET
+     */
+    @GET("article/top/json")
+    Observable<WanResponse<List<ArticleBean>>> getTopArticleList();
+
+    /**
+     * 首页文章列表
+     * 方法：GET
+     * 参数：页码，拼接在连接中，从0开始。
+     */
+    @GET("article/list/{page}/json")
+    Observable<WanResponse<ArticleListBean>> getArticleList(@Path("page") int page);
 }

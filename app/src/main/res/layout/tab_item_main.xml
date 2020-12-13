@@ -10,8 +10,8 @@
     tools:layout_height="49dp">
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/tab_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:scaleType="fitCenter"
         android:layout_above="@+id/tab_name"
         android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:includeFontPadding="false"
         android:textColor="@color/text_third"
-        android:textSize="@dimen/text_size_10"
+        android:textSize="@dimen/text_size_12"
         tools:text="我的"
         />
     <FrameLayout

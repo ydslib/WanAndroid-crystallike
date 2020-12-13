@@ -108,7 +108,7 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
     }
 
     @Override
-    public void getUserArticleListSuccess(int code, ArticleListBean data) {
+    public void getUserArticleListSuccess(ArticleListBean data) {
         System.out.println(data.toJson());
         mCurrPage = data.getCurPage() + PAGE_START;
         if (data.getCurPage() == 1) {
@@ -125,7 +125,7 @@ public class UserArticleFragment extends BaseMvpFragment<UserArticlePresenter>
     }
 
     @Override
-    public void getUserArticleListFailed(int code, String msg) {
+    public void getUserArticleListFailed(String msg) {
 //        mMultiStateView.setViewState(MultiStateView.ViewState.ERROR);
 
         mSmartRefreshUtil.fail();

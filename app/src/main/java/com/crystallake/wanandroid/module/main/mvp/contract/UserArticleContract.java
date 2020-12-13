@@ -15,8 +15,8 @@ import io.reactivex.rxjava3.core.Observable;
 public interface UserArticleContract {
 
     interface UserArticleView extends IView{
-        void getUserArticleListSuccess(int code,ArticleListBean data);
-        void getUserArticleListFailed(int code, String msg);
+        void getUserArticleListSuccess(ArticleListBean data);
+        void getUserArticleListFailed(String msg);
     }
 
     interface UserArticlePresenter extends IPresenter<UserArticleView>{

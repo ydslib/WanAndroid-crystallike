@@ -49,7 +49,7 @@ public class UserArticlePresenter extends BasePresenter<UserArticleModel, UserAr
                 .subscribe(new Consumer<ArticleListBean>() {
                     @Override
                     public void accept(ArticleListBean articleListBean) throws Throwable {
-                        getView().getUserArticleListSuccess(0, articleListBean);
+                        getView().getUserArticleListSuccess(articleListBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

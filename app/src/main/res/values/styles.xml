@@ -44,4 +44,18 @@
         <item name="msv_viewState">content</item>
     </style>
 
+    <style name="ConstraintMatch">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
+    <style name="ConstraintMatch.MultiStateView">
+        <item name="msv_errorView">@layout/layout_state_error</item>
+        <item name="msv_emptyView">@layout/layout_state_empty</item>
+        <item name="msv_loadingView">@layout/layout_state_loading</item>
+        <item name="msv_viewState">content</item>
+    </style>
+
 </resources>
