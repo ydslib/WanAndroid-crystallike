@@ -5,6 +5,7 @@
 package com.crystallake.wanandroid.module.main.mvp.model;
 
 import com.crystallake.basic.base.mvp.model.BaseModel;
+import com.crystallake.wanandroid.module.main.mvp.contract.MainContract;
 
-public class MainModel extends BaseModel {
+public class MainModel extends BaseModel implements MainContract.MainModel {
 }

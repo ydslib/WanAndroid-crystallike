@@ -52,6 +52,9 @@ public class ArticleBean extends BaseBean {
     private String author;
     private boolean canEdit;
     private int chapterId;
+    /**
+     * 分类名，子类名
+     */
     private String chapterName;
     private boolean collect;
     private int courseId;
@@ -79,6 +82,9 @@ public class ArticleBean extends BaseBean {
     private long shareDate;
     private String shareUser;
     private int superChapterId;
+    /**
+     * 分类名，父类名
+     */
     private String superChapterName;
     private String title;
     private int type;

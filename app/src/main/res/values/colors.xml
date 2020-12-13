@@ -15,6 +15,7 @@
     <color name="main">#4282f4</color>
 
     <color name="text_third">#999999</color>
+    <color name="text_def">#999999</color>
 
     <color name="text_surface">#333333</color>
     <color name="text_second">#666666</color>
