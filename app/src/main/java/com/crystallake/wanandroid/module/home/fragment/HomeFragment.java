@@ -13,10 +13,12 @@ import com.crystallake.wanandroid.adapter.ArticleAdapter;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.presenter.HomePresenter;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
+import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,11 +65,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                     public void onRefresh() {
                         mCurPage = PAGE_START;
                         getTopArticleList(true);
+                        getArticleList(true);
                     }
                 }).setLoadMoreListener(new SmartRefreshUtil.LoadMoreListener() {
                     @Override
                     public void onLoadMore() {
-
+                        getArticleList(true);
                     }
                 });
         mArticleAdapter = new ArticleAdapter();
@@ -97,8 +100,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         for (ArticleBean bean : data) {
             bean.setTop(true);
         }
-        mArticleAdapter.setNewInstance(data);
-
+        List<ArticleBean> newData = new ArrayList<>(data);
+        List<ArticleBean> oldData = mArticleAdapter.getData();
+        for (ArticleBean b : oldData) {
+            if (!b.isTop()) {
+                newData.add(b);
+            }
+        }
+        mArticleAdapter.setNewInstance(newData);
     }
 
     @Override
@@ -106,16 +115,47 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     }
 
+    @Override
+    public void getArticleListSuccess(ArticleListBean bean) {
+        mCurPage = bean.getCurPage() + PAGE_START;
+        if (mCurPage == 1) {
+            mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+            List<ArticleBean> newData = new ArrayList<>();
+            List<ArticleBean> data = mArticleAdapter.getData();
+            for (ArticleBean b : data) {
+                if (b.isTop()) {
+                    newData.add(b);
+                }
+            }
+            newData.addAll(bean.getDatas());
+            mArticleAdapter.setNewInstance(newData);
+        } else {
+            mArticleAdapter.addData(bean.getDatas());
+        }
+        mSmartRefreshUtil.success();
+    }
+
+    @Override
+    public void getArticleListFailed(String msg) {
+        mSmartRefreshUtil.fail();
+    }
+
     private void getTopArticleList(boolean refresh) {
         mPresenter.getTopArticleList(refresh);
+    }
+
+    private void getArticleList(boolean refresh) {
+        mPresenter.getArticleList(mCurPage, refresh);
     }
 
     @Override
     protected void onVisible(boolean isFirstVisible) {
         super.onVisible(isFirstVisible);
         if (isFirstVisible) {
+            showLoading();
             mCurPage = PAGE_START;
             getTopArticleList(false);
+            getArticleList(false);
         }
     }
 
@@ -128,4 +168,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void hideLoading() {
         mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
     }
+
+
 }

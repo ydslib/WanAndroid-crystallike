@@ -30,6 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none"
+                android:paddingBottom="@dimen/padding_bottom_49"
+                android:clipToPadding="true"
                 android:overScrollMode="never"/>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </com.kennyc.view.MultiStateView>

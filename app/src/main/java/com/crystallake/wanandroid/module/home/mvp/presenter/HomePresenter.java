@@ -9,6 +9,7 @@ import com.crystallake.basic.http.function.RetryWithDelay;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.model.HomeModel;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
+import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 
 import java.util.List;
 
@@ -27,22 +28,6 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.HomeVie
     @Override
     public void getTopArticleList(boolean refresh) {
         getModel().getTopArticleList()
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Throwable {
-                        if (!refresh){
-                            getView().showLoading();
-                        }
-                    }
-                })
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        if (!refresh){
-                            getView().hideLoading();
-                        }
-                    }
-                })
                 .compose(getView().bindToLife())
                 .retryWhen(new RetryWithDelay())
                 .subscribe(new Consumer<List<ArticleBean>>() {
@@ -54,6 +39,24 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.HomeVie
                     @Override
                     public void accept(Throwable throwable) throws Throwable {
                         getView().getTopArticleListFailed(throwable.getMessage());
+                    }
+                });
+
+    }
+
+    @Override
+    public void getArticleList(int page, boolean refresh) {
+        getModel().getArticleListBean(page, refresh)
+                .compose(getView().bindToLife())
+                .subscribe(new Consumer<ArticleListBean>() {
+                    @Override
+                    public void accept(ArticleListBean articleListBean) throws Throwable {
+                        getView().getArticleListSuccess(articleListBean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        getView().getArticleListFailed(throwable.getMessage());
                     }
                 });
 
