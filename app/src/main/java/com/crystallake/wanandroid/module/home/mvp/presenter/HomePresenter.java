@@ -6,6 +6,7 @@ package com.crystallake.wanandroid.module.home.mvp.presenter;
 
 import com.crystallake.basic.base.mvp.presenter.BasePresenter;
 import com.crystallake.basic.http.function.RetryWithDelay;
+import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.model.HomeModel;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
@@ -60,5 +61,22 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.HomeVie
                     }
                 });
 
+    }
+
+    @Override
+    public void getBannerList() {
+        getModel().getBannerList()
+                .compose(getView().bindToLife())
+                .subscribe(new Consumer<List<BannerBean>>() {
+                    @Override
+                    public void accept(List<BannerBean> bannerBeans) throws Throwable {
+                        getView().getBannerListSuccess(bannerBeans);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        getView().getBannerListFailed(throwable.getMessage());
+                    }
+                });
     }
 }

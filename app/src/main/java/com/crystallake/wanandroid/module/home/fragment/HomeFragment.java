@@ -4,19 +4,30 @@
  */
 package com.crystallake.wanandroid.module.home.fragment;
 
+import android.view.ViewGroup;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.crystallake.appbase.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.adapter.ArticleAdapter;
+import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.presenter.HomePresenter;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
+import com.crystallake.wanandroid.utils.DisplayInfoUtils;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +51,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private ArticleAdapter mArticleAdapter;
     private SmartRefreshUtil mSmartRefreshUtil;
     private int mCurPage = PAGE_START;
+    private Banner mBanner;
 
 
     public static HomeFragment create() {
@@ -140,12 +152,27 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mSmartRefreshUtil.fail();
     }
 
+    @Override
+    public void getBannerListSuccess(List<BannerBean> data) {
+        createBanner(data);
+        mArticleAdapter.addHeaderView(mBanner);
+    }
+
+    @Override
+    public void getBannerListFailed(String msg) {
+
+    }
+
     private void getTopArticleList(boolean refresh) {
         mPresenter.getTopArticleList(refresh);
     }
 
     private void getArticleList(boolean refresh) {
         mPresenter.getArticleList(mCurPage, refresh);
+    }
+
+    private void getBannerList() {
+        mPresenter.getBannerList();
     }
 
     @Override
@@ -156,6 +183,30 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             mCurPage = PAGE_START;
             getTopArticleList(false);
             getArticleList(false);
+            getBannerList();
+        }
+    }
+
+    private void createBanner(List<BannerBean> data) {
+        if (mBanner == null && getContext() != null) {
+            mBanner = new Banner(getContext());
+            int height = (int) (DisplayInfoUtils.getInstance().getWidthPixels() * (9F / 16F));
+            mBanner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+            mBanner.setAdapter(new BannerImageAdapter<BannerBean>(data) {
+                @Override
+                public void onBindView(BannerImageHolder holder, BannerBean data, int position, int size) {
+                    Glide.with(holder.imageView)
+                            .load(data.getImagePath())
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                            .into(holder.imageView);
+                    System.out.println(data.getUrl());
+
+
+                }
+            })
+                    .addBannerLifecycleObserver(this)
+                    .setIndicator(new CircleIndicator(getContext()));
+
         }
     }
 

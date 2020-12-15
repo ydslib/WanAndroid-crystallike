@@ -7,6 +7,7 @@ package com.crystallake.wanandroid.module.home.mvp.contract;
 import com.crystallake.basic.base.mvp.model.IModel;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.basic.base.mvp.view.IView;
+import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 
@@ -21,15 +22,20 @@ public interface HomeContract {
 
         void getArticleListSuccess(ArticleListBean bean);
         void getArticleListFailed(String msg);
+
+        void getBannerListSuccess(List<BannerBean> data);
+        void getBannerListFailed(String msg);
     }
 
     interface HomePresenter extends IPresenter<HomeView>{
         void getTopArticleList(boolean refresh);
         void getArticleList(int page,boolean refresh);
+        void getBannerList();
     }
 
     interface HomeModel extends IModel{
         Observable<List<ArticleBean>> getTopArticleList();
         Observable<ArticleListBean> getArticleListBean(int page,boolean refresh);
+        Observable<List<BannerBean>> getBannerList();
     }
 }

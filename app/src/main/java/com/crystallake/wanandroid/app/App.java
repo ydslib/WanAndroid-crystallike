@@ -19,6 +19,7 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
 
 public class App extends BaseApp {
+    public static App instance;
     static {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
@@ -35,5 +36,15 @@ public class App extends BaseApp {
                 return new ClassicsFooter(context);
             }
         });
+    }
+
+    public static App getInstance(){
+        return instance;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
     }
 }

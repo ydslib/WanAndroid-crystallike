@@ -32,7 +32,10 @@
                 android:scrollbars="none"
                 android:paddingBottom="@dimen/padding_bottom_49"
                 android:clipToPadding="true"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                />
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </com.kennyc.view.MultiStateView>
 </androidx.constraintlayout.widget.ConstraintLayout>
