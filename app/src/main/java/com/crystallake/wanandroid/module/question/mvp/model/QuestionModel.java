@@ -5,7 +5,29 @@
 package com.crystallake.wanandroid.module.question.mvp.model;
 
 import com.crystallake.basic.base.mvp.model.BaseModel;
+import com.crystallake.wanandroid.http.RetrofitHelper;
+import com.crystallake.wanandroid.http.response.WanResponse;
+import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.module.question.mvp.contract.QuestionContract;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class QuestionModel extends BaseModel implements QuestionContract.QuestionModel {
+    @Override
+    public Observable<ArticleListBean> getQuestionList(int page) {
+        return RetrofitHelper.getRetrofitService()
+                .getQuestionList(page)
+                .map(new Function<WanResponse<ArticleListBean>, ArticleListBean>() {
+                    @Override
+                    public ArticleListBean apply(WanResponse<ArticleListBean> response) throws Throwable {
+                        return response.getData();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
 }

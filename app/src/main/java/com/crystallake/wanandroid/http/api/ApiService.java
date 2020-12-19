@@ -45,4 +45,11 @@ public interface ApiService {
      */
     @GET("banner/json")
     Observable<WanResponse<List<BannerBean>>> getBanner();
+
+    /**
+     * 问答
+     * pageId,拼接在链接上，例如上面的1
+     */
+    @GET("wenda/list/{page}/json")
+    Observable<WanResponse<ArticleListBean>> getQuestionList(@Path("page") int page);
 }

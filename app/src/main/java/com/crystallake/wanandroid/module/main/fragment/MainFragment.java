@@ -51,6 +51,7 @@ public class MainFragment extends BaseFragment {
     @Override
     protected void initData() {
         mPageAdapter.notifyPageDataChange();
+        mViewPager.setCurrentItem(0);
     }
 
     @Override
