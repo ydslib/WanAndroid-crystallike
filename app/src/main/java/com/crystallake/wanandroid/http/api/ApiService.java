@@ -6,6 +6,7 @@ package com.crystallake.wanandroid.http.api;
 
 import com.crystallake.wanandroid.http.response.WanResponse;
 import com.crystallake.wanandroid.module.home.bean.BannerBean;
+import com.crystallake.wanandroid.module.knowledge.bean.ChapterBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 
@@ -52,4 +53,10 @@ public interface ApiService {
      */
     @GET("wenda/list/{page}/json")
     Observable<WanResponse<ArticleListBean>> getQuestionList(@Path("page") int page);
+
+    /**
+     * 体系数据
+     */
+    @GET("tree/json")
+    Observable<WanResponse<List<ChapterBean>>> getKnowledgeList();
 }

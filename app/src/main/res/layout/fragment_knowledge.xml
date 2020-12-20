@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.kennyc.view.MultiStateView
         android:id="@+id/knowledge_multi_state_view"
@@ -9,7 +10,8 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/knowledge_smart_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:srlEnablePureScrollMode="true">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/knowledge_recycler"
                 android:layout_width="match_parent"

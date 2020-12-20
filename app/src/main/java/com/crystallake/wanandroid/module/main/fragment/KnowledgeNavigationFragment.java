@@ -7,7 +7,9 @@ package com.crystallake.wanandroid.module.main.fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.crystallake.appbase.R;
+import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.basic.base.fragment.support.BaseFragment;
+import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
 import com.crystallake.wanandroid.module.knowledge.fragment.KnowledgeFragment;
 import com.crystallake.wanandroid.module.navi.fragment.NaviFragment;
@@ -20,7 +22,7 @@ import net.lucode.hackware.magicindicator.MagicIndicator;
 import butterknife.BindView;
 import per.goweii.actionbarex.ActionBarEx;
 
-public class KnowledgeNavigationFragment extends BaseFragment implements ScrollTop{
+public class KnowledgeNavigationFragment extends BaseMvpFragment implements ScrollTop{
 
     @BindView(R.id.know_navi_view_pager)
     ViewPager mViewPager;
@@ -71,4 +73,13 @@ public class KnowledgeNavigationFragment extends BaseFragment implements ScrollT
 
     }
 
+    @Override
+    protected IPresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
 }
