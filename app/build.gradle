@@ -42,6 +42,7 @@ dependencies {
     implementation  "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2"
     // 完全引入
     implementation 'com.github.goweii:ActionBarEx:3.3.0'
+    implementation 'com.github.hackware1993:MagicIndicator:1.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

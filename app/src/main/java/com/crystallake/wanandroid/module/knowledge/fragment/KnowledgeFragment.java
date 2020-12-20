@@ -10,6 +10,12 @@ import com.crystallake.wanandroid.module.knowledge.mvp.contract.KnowledgeContrac
 import com.crystallake.wanandroid.module.knowledge.mvp.presenter.KnowledgePresenter;
 
 public class KnowledgeFragment extends BaseMvpFragment<KnowledgePresenter> implements KnowledgeContract.KnowledgeView {
+
+
+    public static KnowledgeFragment create(){
+        return new KnowledgeFragment();
+    }
+
     @Override
     protected KnowledgePresenter createPresenter() {
         return new KnowledgePresenter();

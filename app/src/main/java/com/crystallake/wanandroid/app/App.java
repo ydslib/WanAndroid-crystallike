@@ -9,6 +9,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.crystallake.basic.app.BaseApp;
+import com.crystallake.wanandroid.utils.AppUtils;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -45,6 +46,7 @@ public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppUtils.init(this);
         instance = this;
     }
 }
