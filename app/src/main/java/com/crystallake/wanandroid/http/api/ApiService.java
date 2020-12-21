@@ -9,6 +9,7 @@ import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.knowledge.bean.ChapterBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
+import com.crystallake.wanandroid.module.navi.bean.NaviBean;
 
 import java.util.List;
 
@@ -59,4 +60,9 @@ public interface ApiService {
      */
     @GET("tree/json")
     Observable<WanResponse<List<ChapterBean>>> getKnowledgeList();
+    /**
+     * 搜索热词
+     */
+    @GET("navi/json")
+    Observable<WanResponse<List<NaviBean>>> getNaviList();
 }
