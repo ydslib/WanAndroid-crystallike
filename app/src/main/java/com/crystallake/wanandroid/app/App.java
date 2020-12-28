@@ -18,6 +18,7 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class App extends BaseApp {
     public static App instance;
@@ -46,6 +47,7 @@ public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashReport.initCrashReport(getApplicationContext(),"e52158dacb",false);
         AppUtils.init(this);
         instance = this;
     }

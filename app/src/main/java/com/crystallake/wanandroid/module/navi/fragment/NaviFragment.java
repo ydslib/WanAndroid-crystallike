@@ -7,7 +7,7 @@ package com.crystallake.wanandroid.module.navi.fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.adapter.NaviAdapter;
 import com.crystallake.wanandroid.module.navi.bean.NaviBean;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 
 import org.jetbrains.annotations.NotNull;

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.activity.BaseMvpActivity;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
 import com.crystallake.wanandroid.module.main.fragment.UserArticleFragment;

@@ -19,7 +19,6 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
     private static BaseApp instance;
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();

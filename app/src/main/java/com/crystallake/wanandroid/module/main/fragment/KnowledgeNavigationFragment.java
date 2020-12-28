@@ -6,7 +6,7 @@ package com.crystallake.wanandroid.module.main.fragment;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.basic.base.fragment.support.BaseFragment;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;

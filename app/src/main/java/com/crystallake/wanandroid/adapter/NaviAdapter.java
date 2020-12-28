@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.navi.bean.NaviBean;
 import com.google.android.flexbox.FlexboxLayout;

@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.support.BaseFragment;
 import com.crystallake.wanandroid.adapter.MainTabAdapter;
 import com.crystallake.wanandroid.adapter.TabFragmentPageAdapter;

@@ -13,10 +13,11 @@ import androidx.annotation.Nullable;
 import com.crystallake.basic.base.fragment.support.BaseLazyFragment;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.basic.base.mvp.view.IView;
+import com.crystallake.basic.utils.click.ClickUtils;
 import com.trello.rxlifecycle4.LifecycleTransformer;
 import com.trello.rxlifecycle4.android.FragmentEvent;
 
-public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFragment implements IView {
+public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFragment implements IView, View.OnClickListener {
 
     protected P mPresenter;
 
@@ -60,6 +61,17 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFrag
         mPresenter = null;
     }
 
+    /**
+     * @return true表示允许连续, false表示不允许
+     */
+    protected boolean isAllowContinuousClick() {
+        return false;
+    }
+
+    protected void disContinuousClick(View view) {
+
+    }
+
     @Nullable
     @Override
     public Context getContext() {
@@ -69,5 +81,19 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFrag
     @Override
     public <T> LifecycleTransformer<T> bindToLife() {
         return this.bindUntilEvent(FragmentEvent.DESTROY_VIEW);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (!isAllowContinuousClick()) {
+            long time1 = System.currentTimeMillis();
+            ClickUtils.disContinuousClick(v, new ClickUtils.Callback() {
+                @Override
+                public void onClick(View view) {
+                    disContinuousClick(view);
+                    System.out.println(System.currentTimeMillis() - time1);
+                }
+            });
+        }
     }
 }

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.adapter.MultiFragmentPagerAdapter;
 import com.crystallake.wanandroid.listener.SimpleCallback;
 

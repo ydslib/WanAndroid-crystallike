@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.crystallake.appbase.R;
+import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.entity.TabEntity;
 
 public class MainTabAdapter implements TabAdapter<TabEntity> {
