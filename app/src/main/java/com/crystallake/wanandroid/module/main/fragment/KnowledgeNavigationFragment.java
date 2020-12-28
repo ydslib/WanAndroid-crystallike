@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
-import com.crystallake.basic.base.fragment.support.BaseFragment;
 import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
 import com.crystallake.wanandroid.module.knowledge.fragment.KnowledgeFragment;

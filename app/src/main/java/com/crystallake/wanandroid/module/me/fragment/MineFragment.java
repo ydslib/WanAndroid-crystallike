@@ -16,7 +16,10 @@ import androidx.core.widget.NestedScrollView;
 import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.event.LoginEvent;
+import com.crystallake.wanandroid.module.me.activity.AboutMeActivity;
 import com.crystallake.wanandroid.module.me.activity.CoinActivity;
+import com.crystallake.wanandroid.module.me.activity.CollectActivity;
+import com.crystallake.wanandroid.module.me.activity.ShareActivity;
 import com.crystallake.wanandroid.module.me.mvp.contract.MineContract;
 import com.crystallake.wanandroid.module.me.mvp.presenter.MinePresenter;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
@@ -72,7 +75,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     LinearLayout mAboutMe;
     @BindView(R.id.ll_setting)
     LinearLayout mSetting;
-//    @BindView(R.id.me_action_bar)
+    //    @BindView(R.id.me_action_bar)
 //    ActionBarCommon mBarCommon;
     private SmartRefreshUtil mSmartRefreshUtil;
 
@@ -200,7 +203,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     }
 
     @OnClick({
-            R.id.ll_coin,R.id.ll_about_me
+            R.id.ll_coin, R.id.ll_about_me, R.id.ll_share,
+            R.id.ll_collect, R.id.ll_read_later, R.id.ll_read_record,
+            R.id.ll_open, R.id.ll_setting
     })
     @Override
     public void onClick(View v) {
@@ -209,13 +214,33 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     @Override
     protected void disContinuousClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ll_coin:
-                if (UserInfoUtils.getInstance().loginIfNot(getContext())){
+                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
                     CoinActivity.start(getContext());
                 }
                 break;
             case R.id.ll_about_me:
+                AboutMeActivity.start(getContext());
+                break;
+            case R.id.ll_share:
+                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
+                    ShareActivity.start(getContext());
+                }
+                break;
+            case R.id.ll_collect:
+                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
+                    CollectActivity.start(getContext());
+                }
+                break;
+            case R.id.ll_read_later:
+                
+                break;
+            case R.id.ll_read_record:
+                break;
+            case R.id.ll_open:
+                break;
+            case R.id.ll_setting:
                 break;
         }
     }

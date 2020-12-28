@@ -26,6 +26,9 @@
         <activity android:name="com.crystallake.wanandroid.module.main.activity.ShareArticleActivity"/>
         <activity android:name="com.crystallake.wanandroid.module.login.activity.LoginActivity"/>
         <activity android:name=".module.me.activity.CoinActivity"/>
+        <activity android:name=".module.me.activity.ShareActivity"/>
+        <activity android:name=".module.me.activity.CollectActivity"/>
+        <activity android:name=".module.me.activity.AboutMeActivity"/>
     </application>
 
 </manifest>
