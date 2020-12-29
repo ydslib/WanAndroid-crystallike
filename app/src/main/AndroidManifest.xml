@@ -29,6 +29,10 @@
         <activity android:name=".module.me.activity.ShareActivity"/>
         <activity android:name=".module.me.activity.CollectActivity"/>
         <activity android:name=".module.me.activity.AboutMeActivity"/>
+        <activity android:name=".module.me.activity.ReadLaterActivity"/>
+        <activity android:name=".module.me.activity.ReadRecordActivity"/>
+        <activity android:name=".module.me.activity.OpenActivity"/>
+        <activity android:name=".module.me.activity.SettingActivity"/>
     </application>
 
 </manifest>

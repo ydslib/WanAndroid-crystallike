@@ -19,6 +19,10 @@ import com.crystallake.wanandroid.event.LoginEvent;
 import com.crystallake.wanandroid.module.me.activity.AboutMeActivity;
 import com.crystallake.wanandroid.module.me.activity.CoinActivity;
 import com.crystallake.wanandroid.module.me.activity.CollectActivity;
+import com.crystallake.wanandroid.module.me.activity.OpenActivity;
+import com.crystallake.wanandroid.module.me.activity.ReadLaterActivity;
+import com.crystallake.wanandroid.module.me.activity.ReadRecordActivity;
+import com.crystallake.wanandroid.module.me.activity.SettingActivity;
 import com.crystallake.wanandroid.module.me.activity.ShareActivity;
 import com.crystallake.wanandroid.module.me.mvp.contract.MineContract;
 import com.crystallake.wanandroid.module.me.mvp.presenter.MinePresenter;
@@ -37,9 +41,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import per.goweii.actionbarex.common.ActionBarCommon;
 
 public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.MineView {
-
 
     @BindView(R.id.background_img)
     ImageView mImageView;
@@ -75,8 +79,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     LinearLayout mAboutMe;
     @BindView(R.id.ll_setting)
     LinearLayout mSetting;
-    //    @BindView(R.id.me_action_bar)
-//    ActionBarCommon mBarCommon;
+    @BindView(R.id.me_action_bar)
+    ActionBarCommon mBarCommon;
     private SmartRefreshUtil mSmartRefreshUtil;
 
     @Override
@@ -234,13 +238,16 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 }
                 break;
             case R.id.ll_read_later:
-                
+                ReadLaterActivity.start(getContext());
                 break;
             case R.id.ll_read_record:
+                ReadRecordActivity.start(getContext());
                 break;
             case R.id.ll_open:
+                OpenActivity.start(getContext());
                 break;
             case R.id.ll_setting:
+                SettingActivity.start(getContext());
                 break;
         }
     }

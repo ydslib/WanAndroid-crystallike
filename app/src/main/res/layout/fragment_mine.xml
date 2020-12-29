@@ -473,9 +473,9 @@
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-<!--    <per.goweii.actionbarex.common.ActionBarCommon-->
-<!--        style="@style/ActionBar.Common"-->
-<!--        android:id="@+id/me_action_bar"-->
-<!--        android:background="@color/transparent"-->
-<!--        app:abc_rightIconRes="@drawable/ic_rank"/>-->
+    <per.goweii.actionbarex.common.ActionBarCommon
+        style="@style/ActionBar.Common"
+        android:id="@+id/me_action_bar"
+        android:background="@color/transparent"
+        app:abc_rightIconRes="@drawable/ic_rank"/>
 </FrameLayout>
