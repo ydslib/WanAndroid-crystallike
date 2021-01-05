@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_44dp">44dp</dimen>
+    <dimen name="width_44dp">44dp</dimen>
+    <dimen name="round_radius">12dp</dimen>
+</resources>

@@ -50,6 +50,7 @@ dependencies {
 //    api "io.reactivex.rxjava2:rxandroid:2.1.0"
     api 'com.android.support:multidex:1.0.3'
     api "com.squareup.okhttp3:okhttp:3.11.0"
+    api "com.github.goweii:AnyDialog:3.0.3"
     api "com.squareup.okhttp3:logging-interceptor:3.11.0"
     debugApi "com.squareup.leakcanary:leakcanary-android:2.5"
     api 'org.greenrobot:eventbus:3.2.0'

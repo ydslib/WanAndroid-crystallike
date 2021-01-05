@@ -7,13 +7,28 @@ package com.crystallake.wanandroid.module.login.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
+import androidx.viewpager.widget.ViewPager;
+
+import com.crystallake.basic.base.activity.BaseActivity;
 import com.crystallake.wanandroid.R;
-import com.crystallake.basic.base.activity.BaseMvpActivity;
-import com.crystallake.wanandroid.module.login.mvp.contract.LoginContract;
-import com.crystallake.wanandroid.module.login.mvp.presenter.LoginPresenter;
+import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
+import com.crystallake.wanandroid.module.login.fragment.LoginFragment;
+import com.crystallake.wanandroid.module.login.fragment.RegisterFragment;
 
-public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.LoginView {
+import butterknife.BindView;
+import per.goweii.actionbarex.common.ActionBarCommon;
+
+public class LoginActivity extends BaseActivity {
+
+    @BindView(R.id.action_bar)
+    ActionBarCommon mBarCommon;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
+    private FixedFragmentPagerAdapter mAdapter;
+
 
     public static void start(Context context){
         Intent intent = new Intent(context,LoginActivity.class);
@@ -26,14 +41,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
     }
 
-    @Override
-    protected LoginPresenter createPresenter() {
-        return new LoginPresenter();
-    }
 
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        mAdapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
+        mAdapter.setFragments(LoginFragment.create(), RegisterFragment.create());
+        mViewPager.setAdapter(mAdapter);
     }
 
     @Override
@@ -46,8 +64,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     }
 
-    @Override
-    public void showMsg(String msg) {
-
+    public void switchFragment(boolean isLogin){
+        if(mViewPager!=null){
+            if (isLogin) {
+                mViewPager.setCurrentItem(0);
+            }else{
+                mViewPager.setCurrentItem(1);
+            }
+        }
     }
+
 }

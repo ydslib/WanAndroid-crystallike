@@ -7,6 +7,7 @@ package com.crystallake.wanandroid.http.api;
 import com.crystallake.wanandroid.http.response.WanResponse;
 import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.knowledge.bean.ChapterBean;
+import com.crystallake.wanandroid.module.login.bean.LoginBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.module.navi.bean.NaviBean;
@@ -14,7 +15,10 @@ import com.crystallake.wanandroid.module.navi.bean.NaviBean;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 
@@ -65,4 +69,26 @@ public interface ApiService {
      */
     @GET("navi/json")
     Observable<WanResponse<List<NaviBean>>> getNaviList();
+
+    /**
+     * 登录
+     * 方法： POST
+     * 参数：
+     * username，password
+     * 登录后会在cookie中返回账号密码，只要在客户端做cookie持久化存储即可自动登录验证。
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    Observable<WanResponse<LoginBean>> login(@Field("username") String username,
+                                                          @Field("password") String password);
+
+
+
+    /**
+     * 获取个人积分
+     */
+    @GET("lg/coin/getcount/json")
+    Observable<WanResponse<Integer>> getCoin();
+
+
 }

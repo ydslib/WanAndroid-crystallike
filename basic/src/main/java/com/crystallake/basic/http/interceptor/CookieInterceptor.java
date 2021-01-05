@@ -24,12 +24,13 @@ public class CookieInterceptor implements Interceptor {
         Request request = chain.request();
         String requestUrl = request.url().toString();
         String domain = request.url().host();
+        System.out.println("requestUrl:" + requestUrl);
 
         Response response = chain.proceed(request);
-        if (requestUrl.contains(HttpConstant.SAVE_USER_LOGIN_KEY)){
+        if (requestUrl.contains(HttpConstant.SAVE_USER_LOGIN_KEY)) {
             List<String> cookies = response.headers(HttpConstant.SET_COOKIE_KEY);
-            SPUtils.getInstance().put(domain,encodeCookie(cookies));
-        }else if (requestUrl.contains(HttpConstant.REMOVE_USER_LOGOUT_KEY)) {
+            SPUtils.getInstance().put(domain, encodeCookie(cookies));
+        } else if (requestUrl.contains(HttpConstant.REMOVE_USER_LOGOUT_KEY)) {
             SPUtils.getInstance().remove(domain);
         }
         return response;

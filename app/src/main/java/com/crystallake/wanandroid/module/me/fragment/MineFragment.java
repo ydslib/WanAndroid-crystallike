@@ -16,6 +16,7 @@ import androidx.core.widget.NestedScrollView;
 import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.event.LoginEvent;
+import com.crystallake.wanandroid.module.login.bean.LoginBean;
 import com.crystallake.wanandroid.module.me.activity.AboutMeActivity;
 import com.crystallake.wanandroid.module.me.activity.CoinActivity;
 import com.crystallake.wanandroid.module.me.activity.CollectActivity;
@@ -203,7 +204,31 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(LoginEvent event) {
+        if (isDetached()){
+            return;
+        }
+        changeUserInfo();
+    }
 
+    private void changeUserInfo() {
+        if (UserInfoUtils.getInstance().isLogin()){
+            LoginBean bean = UserInfoUtils.getInstance().getLoginBean();
+            mUserName.setText(bean.getUsername());
+            mUserId.setVisibility(View.VISIBLE);
+            mUserId.setText(bean.getId()+"");
+            System.out.println(bean.toJson());
+        }
+    }
+
+    private void setRefresh(){
+        if (UserInfoUtils.getInstance().isLogin()){
+            mSmartRefreshUtil.setRefreshListener(new SmartRefreshUtil.RefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                }
+            });
+        }
     }
 
     @OnClick({

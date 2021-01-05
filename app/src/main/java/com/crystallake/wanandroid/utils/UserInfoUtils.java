@@ -34,7 +34,7 @@ public class UserInfoUtils {
             if (!TextUtils.isEmpty(json)) {
                 try {
                     mLoginBean = new Gson().fromJson(json, LoginBean.class);
-                }catch (Exception ignore){
+                } catch (Exception ignore) {
 
                 }
             }
@@ -42,19 +42,26 @@ public class UserInfoUtils {
         return mLoginBean;
     }
 
-    public boolean isLogin(){
-        return mLoginBean!=null&&mLoginBean.getId()>0;
+    public void login(LoginBean bean) {
+        mLoginBean = bean;
+        String json = new Gson().toJson(bean);
+        SPUtils.getInstance().put(KEY_LOGIN_BEAN, json);
     }
 
-    public int getUserId(){
-        if (mLoginBean==null){
+    public boolean isLogin() {
+        LoginBean loginBean = getLoginBean();
+        return loginBean != null && loginBean.getId() > 0;
+    }
+
+    public int getUserId() {
+        if (mLoginBean == null) {
             return 0;
         }
         return mLoginBean.getId();
     }
 
-    public boolean loginIfNot(Context context){
-        if (isLogin()){
+    public boolean loginIfNot(Context context) {
+        if (isLogin()) {
             return true;
         }
         LoginActivity.start(context);

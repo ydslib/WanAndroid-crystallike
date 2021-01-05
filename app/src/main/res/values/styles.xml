@@ -29,6 +29,21 @@
         <item name="abc_rightTextColor">@color/text_white</item>
     </style>
 
+    <style name="ActionBar.Constraint">
+        <item name="abc_titleTextColor">@color/text_white</item>
+        <item name="abc_leftIconColor">@color/text_white</item>
+        <item name="abc_leftIconPadding">@dimen/padding_left_13dp</item>
+        <item name="abc_leftIconMarginLeft">@dimen/margin_left_3dp</item>
+        <item name="abc_leftTextColor">@color/text_white</item>
+        <item name="abc_rightIconColor">@color/text_white</item>
+        <item name="abc_rightIconMarginRight">@dimen/margin_right_3dp</item>
+        <item name="abc_rightIconPadding">@dimen/padding_right_13dp</item>
+        <item name="abc_rightTextColor">@color/text_white</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
     <style name="ActionBar.Common.Back">
         <item name="abc_leftIconRes">@drawable/ic_back</item>
         <item name="abc_leftIconMarginLeft">0dp</item>
@@ -56,6 +71,15 @@
         <item name="msv_emptyView">@layout/layout_state_empty</item>
         <item name="msv_loadingView">@layout/layout_state_loading</item>
         <item name="msv_viewState">content</item>
+    </style>
+
+    <style name="ButtonMain">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_44dp</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_solid_round_color_accent_radius_max</item>
     </style>
 
 </resources>

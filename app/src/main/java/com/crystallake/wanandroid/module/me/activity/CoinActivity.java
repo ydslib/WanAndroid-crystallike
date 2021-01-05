@@ -31,7 +31,7 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
 
     @Override
     protected void initData() {
-
+        mPresenter.getCoin();
     }
 
     @Override
@@ -41,6 +41,16 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
 
     @Override
     public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void getCoinSuccess(int coin) {
+
+    }
+
+    @Override
+    public void getCoinFailed(String msg) {
 
     }
 }
