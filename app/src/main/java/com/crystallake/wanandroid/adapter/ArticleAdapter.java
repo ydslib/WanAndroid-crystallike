@@ -10,12 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 
-import org.jetbrains.annotations.NotNull;
 
 
 public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder> {
@@ -25,11 +26,11 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder holder, ArticleBean bean) {
+    protected void convert(@NonNull BaseViewHolder holder, ArticleBean bean) {
         bindDataToWidget(holder, bean);
     }
 
-    private void bindDataToWidget(@NotNull BaseViewHolder holder, ArticleBean bean) {
+    private void bindDataToWidget(@NonNull BaseViewHolder holder, ArticleBean bean) {
         TextView tvTop = holder.getView(R.id.tv_top);
         TextView tvNew = holder.getView(R.id.tv_new);
         TextView tvAuthor = holder.getView(R.id.tv_author);

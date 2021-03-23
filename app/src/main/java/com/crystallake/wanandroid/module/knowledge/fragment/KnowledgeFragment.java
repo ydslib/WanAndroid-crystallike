@@ -5,13 +5,15 @@
 package com.crystallake.wanandroid.module.knowledge.fragment;
 
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
-import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.adapter.KnowledgeAdapter;
+import com.crystallake.wanandroid.databinding.FragmentKnowledgeBinding;
 import com.crystallake.wanandroid.module.knowledge.bean.ChapterBean;
 import com.crystallake.wanandroid.module.knowledge.mvp.contract.KnowledgeContract;
 import com.crystallake.wanandroid.module.knowledge.mvp.presenter.KnowledgePresenter;
@@ -19,14 +21,11 @@ import com.kennyc.view.MultiStateView;
 
 import java.util.List;
 
-import butterknife.BindView;
 
 public class KnowledgeFragment extends BaseMvpFragment<KnowledgePresenter> implements KnowledgeContract.KnowledgeView {
 
-    @BindView(R.id.knowledge_multi_state_view)
-    MultiStateView mMultiStateView;
-    @BindView(R.id.knowledge_recycler)
-    RecyclerView mRecyclerView;
+
+    private FragmentKnowledgeBinding mBinding;
 
     private KnowledgeAdapter mAdapter;
 
@@ -40,16 +39,12 @@ public class KnowledgeFragment extends BaseMvpFragment<KnowledgePresenter> imple
         return new KnowledgePresenter();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge;
-    }
 
     @Override
     protected void initView() {
         mAdapter = new KnowledgeAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
+        mBinding.knowledgeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.knowledgeRecycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -63,13 +58,19 @@ public class KnowledgeFragment extends BaseMvpFragment<KnowledgePresenter> imple
     }
 
     @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentKnowledgeBinding.inflate(inflater, container, false);
+        return mBinding;
+    }
+
+    @Override
     public void showMsg(String msg) {
 
     }
 
     @Override
     public void getKnowledgeListSuccess(List<ChapterBean> beanList) {
-        mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+        mBinding.knowledgeMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
         mAdapter.setNewInstance(beanList);
     }
 
@@ -84,12 +85,12 @@ public class KnowledgeFragment extends BaseMvpFragment<KnowledgePresenter> imple
 
     @Override
     public void showLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.LOADING);
+        mBinding.knowledgeMultiStateView.setViewState(MultiStateView.ViewState.LOADING);
     }
 
     @Override
     public void hideLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+        mBinding.knowledgeMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
     }
 
     @Override

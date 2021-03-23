@@ -8,7 +8,7 @@ import com.crystallake.basic.base.mvp.presenter.BasePresenter;
 import com.crystallake.wanandroid.module.me.mvp.contract.CoinContract;
 import com.crystallake.wanandroid.module.me.mvp.model.CoinModel;
 
-import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CoinPresenter extends BasePresenter<CoinModel, CoinContract.CoinView> implements CoinContract.CoinPresenter {
     @Override
@@ -18,18 +18,11 @@ public class CoinPresenter extends BasePresenter<CoinModel, CoinContract.CoinVie
 
     @Override
     public void getCoin() {
-        getModel().getCoin()
+        Disposable disposable = getModel().getCoin()
                 .compose(getView().bindToLife())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Throwable {
-                        getView().getCoinSuccess(integer);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        getView().getCoinFailed(throwable.getMessage());
-                    }
-                });
+                .subscribe(integer -> getView().getCoinSuccess(integer),
+                        throwable -> getView().getCoinFailed(throwable.getMessage()));
+
+        addDispose(disposable);
     }
 }

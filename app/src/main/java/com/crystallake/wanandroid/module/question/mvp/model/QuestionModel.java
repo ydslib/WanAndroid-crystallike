@@ -20,12 +20,7 @@ public class QuestionModel extends BaseModel implements QuestionContract.Questio
     public Observable<ArticleListBean> getQuestionList(int page) {
         return RetrofitHelper.getRetrofitService()
                 .getQuestionList(page)
-                .map(new Function<WanResponse<ArticleListBean>, ArticleListBean>() {
-                    @Override
-                    public ArticleListBean apply(WanResponse<ArticleListBean> response) throws Throwable {
-                        return response.getData();
-                    }
-                })
+                .map(WanResponse::getData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 

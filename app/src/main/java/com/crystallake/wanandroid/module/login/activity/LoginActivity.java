@@ -9,25 +9,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewbinding.ViewBinding;
 
 import com.crystallake.basic.base.activity.BaseActivity;
 import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
+import com.crystallake.wanandroid.databinding.ActivityLoginBinding;
 import com.crystallake.wanandroid.module.login.fragment.LoginFragment;
 import com.crystallake.wanandroid.module.login.fragment.RegisterFragment;
 
-import butterknife.BindView;
-import per.goweii.actionbarex.common.ActionBarCommon;
-
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.action_bar)
-    ActionBarCommon mBarCommon;
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
-
-    private FixedFragmentPagerAdapter mAdapter;
+    private ActivityLoginBinding mBinding;
 
 
     public static void start(Context context){
@@ -43,15 +36,10 @@ public class LoginActivity extends BaseActivity {
 
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_login;
-    }
-
-    @Override
     protected void initView(Bundle savedInstanceState) {
-        mAdapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
-        mAdapter.setFragments(LoginFragment.create(), RegisterFragment.create());
-        mViewPager.setAdapter(mAdapter);
+        FixedFragmentPagerAdapter adapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
+        adapter.setFragments(LoginFragment.create(), RegisterFragment.create());
+        mBinding.viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -64,13 +52,17 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected ViewBinding bindView() {
+        mBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        return mBinding;
+    }
+
     public void switchFragment(boolean isLogin){
-        if(mViewPager!=null){
-            if (isLogin) {
-                mViewPager.setCurrentItem(0);
-            }else{
-                mViewPager.setCurrentItem(1);
-            }
+        if (isLogin) {
+            mBinding.viewPager.setCurrentItem(0);
+        }else{
+            mBinding.viewPager.setCurrentItem(1);
         }
     }
 

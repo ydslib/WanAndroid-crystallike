@@ -10,31 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewbinding.ViewBinding;
 
 import com.trello.rxlifecycle4.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 public abstract class BaseFragment extends RxFragment {
-    protected final String TAG = this.getClass().getSimpleName();
+
     protected boolean mViewCreated = false;
 
     protected View mRootView;
     protected Context mContext;
 
-    /**
-     * 绑定 ButterKnife 时返回的 Unbinder ，用于 ButterKnife 解绑
-     */
-    private Unbinder mUnbinder;
 
-
-    @LayoutRes
-    protected abstract int getLayoutRes();
+    protected ViewBinding mViewBinding;
 
     protected abstract void initView();
 
@@ -53,15 +45,19 @@ public abstract class BaseFragment extends RxFragment {
         mContext = getActivity();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(getLayoutRes(), null);
-            mUnbinder = ButterKnife.bind(this, mRootView);
-            if (useEventBus()) {
-                EventBus.getDefault().register(this);
+            mViewBinding = bindView(inflater, container);
+            if (mViewBinding != null) {
+                mRootView = mViewBinding.getRoot();
+                if (useEventBus()) {
+                    EventBus.getDefault().register(this);
+                }
+            } else {
+                return super.onCreateView(inflater, container, savedInstanceState);
             }
+
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {
@@ -70,6 +66,8 @@ public abstract class BaseFragment extends RxFragment {
         mViewCreated = true;
         return mRootView;
     }
+
+    protected abstract ViewBinding bindView(LayoutInflater inflater, ViewGroup container);
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -90,12 +88,9 @@ public abstract class BaseFragment extends RxFragment {
         if (useEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
-            mUnbinder.unbind();
-        }
-        this.mUnbinder = null;
         this.mContext = null;
         this.mRootView = null;
+        this.mViewBinding = null;
         mViewCreated = false;
     }
 }

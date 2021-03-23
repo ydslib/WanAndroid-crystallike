@@ -7,31 +7,18 @@ package com.crystallake.basic.base.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
+import androidx.viewbinding.ViewBinding;
 
 import com.crystallake.rxswipeback.SwipeBackActivity;
-import com.tbruyelle.rxpermissions3.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 public abstract class BaseActivity extends SwipeBackActivity {
 
-    protected final String TAG = this.getClass().getSimpleName();
-
-    /**
-     * 绑定 ButterKnife 时返回的 Unbinder ，用于 ButterKnife 解绑
-     */
-    private Unbinder mUnbinder;
-
-    private RxPermissions rxPermissions;
-
-    @LayoutRes
-    protected abstract int getLayoutRes();
+    protected ViewBinding mViewBinding;
 
     /**
      * 初始化View
@@ -46,22 +33,13 @@ public abstract class BaseActivity extends SwipeBackActivity {
         return false;
     }
 
-    /**
-     * 获取权限处理类
-     */
-    protected RxPermissions getRxPermissions() {
-        rxPermissions = new RxPermissions(this);
-        rxPermissions.setLogging(true);
-        return rxPermissions;
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int layoutResId = getLayoutRes();
-        if (layoutResId != 0) {
-            setContentView(layoutResId);
-            mUnbinder = ButterKnife.bind(this);
+        mViewBinding = bindView();
+        if (mViewBinding != null) {
+            View root = mViewBinding.getRoot();
+            setContentView(root);
             if (useEventBus()) {
                 EventBus.getDefault().register(this);
             }
@@ -69,7 +47,10 @@ public abstract class BaseActivity extends SwipeBackActivity {
             initData();
             initListener();
         }
+
     }
+
+    protected abstract ViewBinding bindView();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -82,13 +63,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
-            mUnbinder.unbind();
-        }
-        this.mUnbinder = null;
         if (useEventBus()) {
             EventBus.getDefault().unregister(this);
         }
+
+        mViewBinding = null;
     }
 
 }

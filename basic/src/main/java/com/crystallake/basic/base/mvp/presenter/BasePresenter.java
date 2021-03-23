@@ -17,8 +17,9 @@ import com.crystallake.basic.utils.Preconditions;
 
 import org.greenrobot.eventbus.EventBus;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 
 public abstract class BasePresenter<M extends IModel, V extends IView> implements IPresenter<V>, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();

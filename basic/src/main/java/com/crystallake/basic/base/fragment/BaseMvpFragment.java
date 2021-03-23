@@ -111,8 +111,8 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseLazyFrag
         }
     }
 
-    public void finish(){
-        if (getActivity()!=null){
+    public void finish() {
+        if (getActivity() != null) {
             getActivity().finish();
         }
     }

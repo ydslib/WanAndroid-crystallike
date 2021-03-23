@@ -6,17 +6,10 @@ package com.crystallake.wanandroid.module.home.mvp.presenter;
 
 import com.crystallake.basic.base.mvp.presenter.BasePresenter;
 import com.crystallake.basic.http.function.RetryWithDelay;
-import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.model.HomeModel;
-import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
-import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
-
-import java.util.List;
 
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
 
 public class HomePresenter extends BasePresenter<HomeModel, HomeContract.HomeView>
         implements HomeContract.HomePresenter {
@@ -28,55 +21,34 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.HomeVie
 
     @Override
     public void getTopArticleList(boolean refresh) {
-        getModel().getTopArticleList()
+        Disposable disposable = getModel().getTopArticleList()
                 .compose(getView().bindToLife())
                 .retryWhen(new RetryWithDelay())
-                .subscribe(new Consumer<List<ArticleBean>>() {
-                    @Override
-                    public void accept(List<ArticleBean> articleBeans) throws Throwable {
-                        getView().getTopArticleListSuccess(articleBeans);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        getView().getTopArticleListFailed(throwable.getMessage());
-                    }
-                });
+                .subscribe(articleBeans -> getView().getTopArticleListSuccess(articleBeans),
+                        throwable -> getView().getTopArticleListFailed(throwable.getMessage()));
+
+        addDispose(disposable);
 
     }
 
     @Override
     public void getArticleList(int page, boolean refresh) {
-        getModel().getArticleListBean(page, refresh)
+        Disposable disposable = getModel().getArticleListBean(page, refresh)
                 .compose(getView().bindToLife())
-                .subscribe(new Consumer<ArticleListBean>() {
-                    @Override
-                    public void accept(ArticleListBean articleListBean) throws Throwable {
-                        getView().getArticleListSuccess(articleListBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        getView().getArticleListFailed(throwable.getMessage());
-                    }
-                });
+                .subscribe(articleListBean -> getView().getArticleListSuccess(articleListBean),
+                        throwable -> getView().getArticleListFailed(throwable.getMessage()));
+
+        addDispose(disposable);
 
     }
 
     @Override
     public void getBannerList() {
-        getModel().getBannerList()
+        Disposable disposable = getModel().getBannerList()
                 .compose(getView().bindToLife())
-                .subscribe(new Consumer<List<BannerBean>>() {
-                    @Override
-                    public void accept(List<BannerBean> bannerBeans) throws Throwable {
-                        getView().getBannerListSuccess(bannerBeans);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        getView().getBannerListFailed(throwable.getMessage());
-                    }
-                });
+                .subscribe(bannerBeans -> getView().getBannerListSuccess(bannerBeans),
+                        throwable -> getView().getBannerListFailed(throwable.getMessage()));
+
+        addDispose(disposable);
     }
 }

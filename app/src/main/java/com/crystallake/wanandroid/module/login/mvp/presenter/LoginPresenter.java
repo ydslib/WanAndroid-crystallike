@@ -25,33 +25,17 @@ public class LoginPresenter extends BasePresenter<LoginModel, LoginContract.Logi
 
     @Override
     public void login(String userName, String password) {
-        getModel().login(userName,password)
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Throwable {
-                        getView().showLoading();
-                    }
-                })
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        getView().hideLoading();
-                    }
-                })
+        Disposable disposable1 = getModel().login(userName, password)
+                .doOnSubscribe(disposable -> getView().showLoading())
+                .doFinally(() -> getView().hideLoading())
                 .compose(getView().bindToLife())
                 .retryWhen(new RetryWithDelay())
-                .subscribe(new Consumer<LoginBean>() {
-                    @Override
-                    public void accept(LoginBean loginBean) throws Throwable {
-                        UserInfoUtils.getInstance().login(loginBean);
-                        getView().loginSuccess(loginBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        getView().loginFailed(throwable.getMessage());
-                    }
-                });
+                .subscribe(loginBean -> {
+                    UserInfoUtils.getInstance().login(loginBean);
+                    getView().loginSuccess(loginBean);
+                }, throwable -> getView().loginFailed(throwable.getMessage()));
+
+        addDispose(disposable1);
 
     }
 }

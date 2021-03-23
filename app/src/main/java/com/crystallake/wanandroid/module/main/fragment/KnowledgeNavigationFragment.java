@@ -4,57 +4,43 @@
  */
 package com.crystallake.wanandroid.module.main.fragment;
 
-import androidx.viewpager.widget.ViewPager;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
+import androidx.viewbinding.ViewBinding;
+
+import com.crystallake.basic.base.fragment.support.BaseFragment;
 import com.crystallake.wanandroid.R;
-import com.crystallake.basic.base.fragment.BaseMvpFragment;
-import com.crystallake.basic.base.mvp.presenter.IPresenter;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
+import com.crystallake.wanandroid.databinding.FragmentKnowledgeNavigationBinding;
 import com.crystallake.wanandroid.module.knowledge.fragment.KnowledgeFragment;
 import com.crystallake.wanandroid.module.navi.fragment.NaviFragment;
 import com.crystallake.wanandroid.utils.MagicIndicatorUtils;
 import com.crystallake.wanandroid.listener.ScrollTop;
-import com.crystallake.wanandroid.listener.SimpleCallback;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
-import butterknife.BindView;
-import per.goweii.actionbarex.ActionBarEx;
 
-public class KnowledgeNavigationFragment extends BaseMvpFragment implements ScrollTop{
+public class KnowledgeNavigationFragment extends BaseFragment implements ScrollTop{
 
-    @BindView(R.id.know_navi_view_pager)
-    ViewPager mViewPager;
 
-    @BindView(R.id.know_navi_action_bar)
-    ActionBarEx mActionBarEx;
-
-    private FixedFragmentPagerAdapter mAdapter;
+    private FragmentKnowledgeNavigationBinding mBinding;
 
     public static KnowledgeNavigationFragment create(){
         return new KnowledgeNavigationFragment();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge_navigation;
-    }
 
     @Override
     protected void initView() {
-        mAdapter = new FixedFragmentPagerAdapter(getChildFragmentManager());
-        mAdapter.setTitle("体系","导航");
-        mAdapter.setFragments(KnowledgeFragment.create(),
+        FixedFragmentPagerAdapter adapter = new FixedFragmentPagerAdapter(getChildFragmentManager());
+        adapter.setTitle("体系","导航");
+        adapter.setFragments(KnowledgeFragment.create(),
                 NaviFragment.create());
-        mViewPager.setAdapter(mAdapter);
-        MagicIndicator magicIndicator = mActionBarEx.getView(R.id.magic_indicator);
-        MagicIndicatorUtils.commonNavigator(magicIndicator,mViewPager,mAdapter,
-                new SimpleCallback<Integer>() {
-                    @Override
-                    public void onResult(Integer data) {
-                        scrollTop();
-                    }
-                });
+        mBinding.knowNaviViewPager.setAdapter(adapter);
+        MagicIndicator magicIndicator = mBinding.knowNaviActionBar.getView(R.id.magic_indicator);
+        MagicIndicatorUtils.commonNavigator(magicIndicator,mBinding.knowNaviViewPager, adapter,
+                data -> scrollTop());
     }
 
     @Override
@@ -68,17 +54,14 @@ public class KnowledgeNavigationFragment extends BaseMvpFragment implements Scro
     }
 
     @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentKnowledgeNavigationBinding.inflate(inflater,container,false);
+        return mBinding;
+    }
+
+    @Override
     public void scrollTop() {
 
     }
 
-    @Override
-    protected IPresenter createPresenter() {
-        return null;
-    }
-
-    @Override
-    public void showMsg(String msg) {
-
-    }
 }

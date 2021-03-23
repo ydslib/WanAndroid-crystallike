@@ -5,37 +5,28 @@
 package com.crystallake.wanandroid.module.login.fragment;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.viewbinding.ViewBinding;
 
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.R;
+import com.crystallake.wanandroid.databinding.FragmentLoginBinding;
 import com.crystallake.wanandroid.event.LoginEvent;
 import com.crystallake.wanandroid.module.login.activity.LoginActivity;
 import com.crystallake.wanandroid.module.login.bean.LoginBean;
 import com.crystallake.wanandroid.module.login.mvp.contract.LoginContract;
 import com.crystallake.wanandroid.module.login.mvp.presenter.LoginPresenter;
-import com.crystallake.wanandroid.utils.InputView;
-import com.crystallake.wanandroid.utils.PasswordInputView;
-import com.crystallake.wanandroid.utils.SubmitView;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 public class LoginFragment extends BaseMvpFragment<LoginPresenter> implements LoginContract.LoginView {
 
-    @BindView(R.id.ll_go_register)
-    LinearLayout mGoRegister;
-    @BindView(R.id.piv_login_account)
-    InputView mUserName;
-    @BindView(R.id.piv_login_password)
-    PasswordInputView mPassword;
-    @BindView(R.id.sv_login)
-    SubmitView mSubmitView;
 
     LoginActivity mLoginActivity;
+
+    private FragmentLoginBinding mBinding;
 
     public static LoginFragment create(){
         return new LoginFragment();
@@ -46,14 +37,11 @@ public class LoginFragment extends BaseMvpFragment<LoginPresenter> implements Lo
         return new LoginPresenter();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_login;
-    }
 
     @Override
     protected void initView() {
-
+        mBinding.llGoRegister.setOnClickListener(this);
+        mBinding.svLogin.setOnClickListener(this);
     }
 
     @Override
@@ -73,11 +61,16 @@ public class LoginFragment extends BaseMvpFragment<LoginPresenter> implements Lo
     }
 
     @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentLoginBinding.inflate(inflater,container,false);
+        return mBinding;
+    }
+
+    @Override
     public void showMsg(String msg) {
 
     }
 
-    @OnClick({R.id.ll_go_register,R.id.sv_login})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -85,18 +78,15 @@ public class LoginFragment extends BaseMvpFragment<LoginPresenter> implements Lo
 
     @Override
     protected boolean isAllowContinuousClick(View v) {
-        switch (v.getId()){
-            default:
-                return false;
-            case R.id.ll_go_register:
-                mLoginActivity.switchFragment(true);
-                break;
-            case R.id.sv_login:
-                String userName = mUserName.getText();
-                String password = mPassword.getText();
-                mPresenter.login(userName,password);
-                break;
-
+        int id = v.getId();
+        if (id == R.id.ll_go_register) {
+            mLoginActivity.switchFragment(true);
+        } else if (id == R.id.sv_login) {
+            String userName = mBinding.pivLoginAccount.getText();
+            String password = mBinding.pivLoginPassword.getText();
+            mPresenter.login(userName, password);
+        } else {
+            return false;
         }
         return true;
     }

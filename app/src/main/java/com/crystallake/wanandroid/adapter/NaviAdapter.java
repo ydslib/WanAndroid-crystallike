@@ -16,8 +16,6 @@ import com.crystallake.wanandroid.module.main.mvp.bean.ArticleBean;
 import com.crystallake.wanandroid.module.navi.bean.NaviBean;
 import com.google.android.flexbox.FlexboxLayout;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -31,7 +29,7 @@ public class NaviAdapter extends BaseQuickAdapter<NaviBean, BaseViewHolder> {
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder holder, NaviBean naviBean) {
+    protected void convert(@NonNull BaseViewHolder holder, NaviBean naviBean) {
         holder.setText(R.id.tv_name,naviBean.getName());
         FlexboxLayout fbl = holder.getView(R.id.flex_box_layout);
         for (int i=0;i<naviBean.getArticles().size();i++){

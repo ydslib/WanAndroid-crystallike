@@ -20,13 +20,17 @@ android {
         multiDexEnabled true
         multiDexKeepProguard file("multidexKeep.pro")
     }
+    buildFeatures{
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions{
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -38,15 +42,15 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(":basic")
     implementation 'com.jakewharton:butterknife:10.2.3'
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'
-    implementation  'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.youth.banner:banner:2.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation  "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2"
-    implementation  "com.google.android:flexbox:1.0.0"
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2"
+    implementation "com.google.android:flexbox:1.0.0"
     // 完全引入
     implementation 'com.github.goweii:ActionBarEx:3.3.0'
     implementation 'com.tencent.bugly:crashreport:latest.release'

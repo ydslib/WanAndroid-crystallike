@@ -14,7 +14,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class KnowledgeModel extends BaseModel implements KnowledgeContract.KnowledgeModel {
@@ -22,12 +21,7 @@ public class KnowledgeModel extends BaseModel implements KnowledgeContract.Knowl
     public Observable<List<ChapterBean>> getKnowledgeList() {
         return RetrofitHelper.getRetrofitService()
                 .getKnowledgeList()
-                .map(new Function<WanResponse<List<ChapterBean>>, List<ChapterBean>>() {
-                    @Override
-                    public List<ChapterBean> apply(WanResponse<List<ChapterBean>> response) throws Throwable {
-                        return response.getData();
-                    }
-                })
+                .map(WanResponse::getData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

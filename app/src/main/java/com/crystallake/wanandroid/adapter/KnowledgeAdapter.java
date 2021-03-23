@@ -15,7 +15,6 @@ import com.crystallake.wanandroid.R;
 import com.crystallake.wanandroid.module.knowledge.bean.ChapterBean;
 import com.google.android.flexbox.FlexboxLayout;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -31,7 +30,7 @@ public class KnowledgeAdapter extends BaseQuickAdapter<ChapterBean, BaseViewHold
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder holder, ChapterBean bean) {
+    protected void convert(@NonNull BaseViewHolder holder, ChapterBean bean) {
         holder.setText(R.id.tv_name,bean.getName());
         FlexboxLayout flexboxLayout = holder.getView(R.id.flex_box_layout);
         for(int i=0;i<bean.getChildren().size();i++){

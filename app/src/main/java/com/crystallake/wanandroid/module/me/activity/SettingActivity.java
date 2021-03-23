@@ -7,8 +7,10 @@ package com.crystallake.wanandroid.module.me.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.viewbinding.ViewBinding;
+
 import com.crystallake.basic.base.activity.BaseMvpActivity;
-import com.crystallake.wanandroid.R;
+import com.crystallake.wanandroid.databinding.ActivitySettingBinding;
 import com.crystallake.wanandroid.module.me.mvp.contract.SettingContract;
 import com.crystallake.wanandroid.module.me.mvp.presenter.SettingPresenter;
 
@@ -25,11 +27,6 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter> implement
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_setting;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -37,6 +34,11 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter> implement
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView() {
+        return ActivitySettingBinding.inflate(getLayoutInflater());
     }
 
     @Override

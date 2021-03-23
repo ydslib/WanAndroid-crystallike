@@ -4,27 +4,24 @@
  */
 package com.crystallake.wanandroid.module.main.fragment;
 
-import android.widget.LinearLayout;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewbinding.ViewBinding;
 
 import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.support.BaseFragment;
 import com.crystallake.wanandroid.adapter.MainTabAdapter;
 import com.crystallake.wanandroid.adapter.TabFragmentPageAdapter;
+import com.crystallake.wanandroid.databinding.FragmentMainBinding;
 import com.crystallake.wanandroid.entity.TabEntity;
 import com.crystallake.wanandroid.module.home.fragment.HomeFragment;
 import com.crystallake.wanandroid.module.me.fragment.MineFragment;
 import com.crystallake.wanandroid.module.question.fragment.QuestionFragment;
 
-import butterknife.BindView;
-
 public class MainFragment extends BaseFragment {
 
-    @BindView(R.id.nav_view_pager)
-    ViewPager mViewPager;
-    @BindView(R.id.container)
-    LinearLayout mContainer;
+    private FragmentMainBinding mBinding;
 
     private TabFragmentPageAdapter<TabEntity> mPageAdapter;
 
@@ -33,14 +30,9 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_main;
-    }
-
-    @Override
     protected void initView() {
         mPageAdapter = new TabFragmentPageAdapter<>(getChildFragmentManager(),
-                mViewPager,mContainer,R.layout.tab_item_main);
+                mBinding.navViewPager,mBinding.container,R.layout.tab_item_main);
 
         mPageAdapter.setPages(new TabFragmentPageAdapter.Page<>(HomeFragment.create(),new TabEntity("首页",R.drawable.ic_bottom_bar_home,-1),new MainTabAdapter()),
                 new TabFragmentPageAdapter.Page<>(QuestionFragment.create(),new TabEntity("问答",R.drawable.ic_bottom_bar_wechat,-1),new MainTabAdapter()),
@@ -51,12 +43,18 @@ public class MainFragment extends BaseFragment {
     @Override
     protected void initData() {
         mPageAdapter.notifyPageDataChange();
-        mViewPager.setCurrentItem(0);
+        mBinding.navViewPager.setCurrentItem(0);
     }
 
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentMainBinding.inflate(inflater,container,false);
+        return mBinding;
     }
 
 }

@@ -7,6 +7,8 @@ package com.crystallake.wanandroid.module.me.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.viewbinding.ViewBinding;
+
 import com.crystallake.basic.base.activity.BaseMvpActivity;
 import com.crystallake.wanandroid.module.me.mvp.contract.OpenContract;
 import com.crystallake.wanandroid.module.me.mvp.presenter.OpenPresenter;
@@ -23,10 +25,6 @@ public class OpenActivity extends BaseMvpActivity<OpenPresenter> implements Open
         return null;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return 0;
-    }
 
     @Override
     protected void initData() {
@@ -36,6 +34,11 @@ public class OpenActivity extends BaseMvpActivity<OpenPresenter> implements Open
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView() {
+        return null;
     }
 
     @Override

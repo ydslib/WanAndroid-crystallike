@@ -20,12 +20,7 @@ public class LoginModel extends BaseModel implements LoginContract.LoginModel {
     @Override
     public Observable<LoginBean> login(String userName, String password) {
         return RetrofitHelper.getRetrofitService().login(userName,password)
-                .map(new Function<WanResponse<LoginBean>, LoginBean>() {
-                    @Override
-                    public LoginBean apply(WanResponse<LoginBean> response) throws Throwable {
-                        return response.getData();
-                    }
-                })
+                .map(WanResponse::getData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

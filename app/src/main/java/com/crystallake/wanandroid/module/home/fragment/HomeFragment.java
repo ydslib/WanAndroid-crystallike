@@ -4,17 +4,18 @@
  */
 package com.crystallake.wanandroid.module.home.fragment;
 
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.adapter.ArticleAdapter;
+import com.crystallake.wanandroid.databinding.FragmentHomeBinding;
 import com.crystallake.wanandroid.module.home.bean.BannerBean;
 import com.crystallake.wanandroid.module.home.mvp.contract.HomeContract;
 import com.crystallake.wanandroid.module.home.mvp.presenter.HomePresenter;
@@ -23,7 +24,6 @@ import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.utils.DisplayInfoUtils;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
 import com.kennyc.view.MultiStateView;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.holder.BannerImageHolder;
@@ -32,21 +32,13 @@ import com.youth.banner.indicator.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import per.goweii.actionbarex.common.ActionBarCommon;
 
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.HomeView {
 
     private static final int PAGE_START = 0;
 
-    @BindView(R.id.action_bar_user_article)
-    ActionBarCommon mBarCommon;
-    @BindView(R.id.home_multi_state)
-    MultiStateView mMultiStateView;
-    @BindView(R.id.home_smart_refresh)
-    SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.home_recycler_view)
-    RecyclerView mRecyclerView;
+    private FragmentHomeBinding mBinding;
+
 
     private ArticleAdapter mArticleAdapter;
     private SmartRefreshUtil mSmartRefreshUtil;
@@ -63,31 +55,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         return new HomePresenter();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_home;
-    }
 
     @Override
     protected void initView() {
-        mSmartRefreshUtil = SmartRefreshUtil.with(mRefreshLayout)
+        mSmartRefreshUtil = SmartRefreshUtil.with(mBinding.homeSmartRefresh)
                 .pureScrollMode()
-                .setRefreshListener(new SmartRefreshUtil.RefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        mCurPage = PAGE_START;
-                        getTopArticleList(true);
-                        getArticleList(true);
-                    }
-                }).setLoadMoreListener(new SmartRefreshUtil.LoadMoreListener() {
-                    @Override
-                    public void onLoadMore() {
-                        getArticleList(true);
-                    }
-                });
+                .setRefreshListener(() -> {
+                    mCurPage = PAGE_START;
+                    getTopArticleList(true);
+                    getArticleList(true);
+                }).setLoadMoreListener(() -> getArticleList(true));
         mArticleAdapter = new ArticleAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mArticleAdapter);
+        mBinding.homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.homeRecyclerView.setAdapter(mArticleAdapter);
 
     }
 
@@ -99,6 +79,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        return mBinding;
     }
 
     @Override
@@ -131,7 +117,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void getArticleListSuccess(ArticleListBean bean) {
         mCurPage = bean.getCurPage() + PAGE_START;
         if (mCurPage == 1) {
-            mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+            mBinding.homeMultiState.setViewState(MultiStateView.ViewState.CONTENT);
             List<ArticleBean> newData = new ArrayList<>();
             List<ArticleBean> data = mArticleAdapter.getData();
             for (ArticleBean b : data) {
@@ -212,12 +198,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     public void showLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.LOADING);
+        mBinding.homeMultiState.setViewState(MultiStateView.ViewState.LOADING);
     }
 
     @Override
     public void hideLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+        mBinding.homeMultiState.setViewState(MultiStateView.ViewState.CONTENT);
     }
 
 

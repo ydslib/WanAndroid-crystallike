@@ -4,17 +4,17 @@
  */
 package com.crystallake.wanandroid.module.me.fragment;
 
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
+import androidx.viewbinding.ViewBinding;
 
 import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
+import com.crystallake.wanandroid.databinding.FragmentMineBinding;
 import com.crystallake.wanandroid.event.LoginEvent;
 import com.crystallake.wanandroid.module.login.bean.LoginBean;
 import com.crystallake.wanandroid.module.me.activity.AboutMeActivity;
@@ -29,8 +29,6 @@ import com.crystallake.wanandroid.module.me.mvp.contract.MineContract;
 import com.crystallake.wanandroid.module.me.mvp.presenter.MinePresenter;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
 import com.crystallake.wanandroid.utils.UserInfoUtils;
-import com.makeramen.roundedimageview.RoundedImageView;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -40,53 +38,19 @@ import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import per.goweii.actionbarex.common.ActionBarCommon;
-
 public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.MineView {
 
-    @BindView(R.id.background_img)
-    ImageView mImageView;
-    @BindView(R.id.me_smart_refresh)
-    SmartRefreshLayout mSmartRefreshLayout;
-    @BindView(R.id.nest_scroll_view)
-    NestedScrollView mNestedScrollView;
-    @BindView(R.id.rl_user_info)
-    RelativeLayout mRelativeLayout;
-    @BindView(R.id.civ_user_icon)
-    RoundedImageView mUserIcon;
-    @BindView(R.id.tv_user_name)
-    TextView mUserName;
-    @BindView(R.id.tv_user_id)
-    TextView mUserId;
-    @BindView(R.id.tv_user_level)
-    TextView mUserLevel;
-    @BindView(R.id.tv_user_ranking)
-    TextView mUserRanking;
-    @BindView(R.id.ll_coin)
-    LinearLayout mMyCoin;
-    @BindView(R.id.ll_share)
-    LinearLayout mShare;
-    @BindView(R.id.ll_collect)
-    LinearLayout mCollect;
-    @BindView(R.id.ll_read_later)
-    LinearLayout mReadLater;
-    @BindView(R.id.ll_read_record)
-    LinearLayout mReadHistory;
-    @BindView(R.id.ll_open)
-    LinearLayout mOpenResource;
-    @BindView(R.id.ll_about_me)
-    LinearLayout mAboutMe;
-    @BindView(R.id.ll_setting)
-    LinearLayout mSetting;
-    @BindView(R.id.me_action_bar)
-    ActionBarCommon mBarCommon;
-    private SmartRefreshUtil mSmartRefreshUtil;
+    private FragmentMineBinding mBinding;
 
     @Override
     protected boolean useEventBus() {
         return true;
+    }
+
+    @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentMineBinding.inflate(inflater,container,false);
+        return mBinding;
     }
 
     public static MineFragment create() {
@@ -98,26 +62,15 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         return new MinePresenter();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_mine;
-    }
 
     @Override
     protected void initView() {
-        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (mNestedScrollView == null || mRelativeLayout == null) return;
-                setBackgroundImageHeight(mRelativeLayout.getMeasuredHeight() - scrollY);
-            }
-        });
+        mBinding.nestScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> setBackgroundImageHeight(mBinding.rlUserInfo.getMeasuredHeight() - scrollY));
 
-        mSmartRefreshLayout.setOnMultiListener(new OnMultiListener() {
+        mBinding.meSmartRefresh.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                if (mNestedScrollView == null || mRelativeLayout == null) return;
-                setBackgroundImageHeight(mRelativeLayout.getMeasuredHeight() - mNestedScrollView.getScrollY() + offset);
+                setBackgroundImageHeight(mBinding.rlUserInfo.getMeasuredHeight() - mBinding.nestScrollView.getScrollY() + offset);
             }
 
             @Override
@@ -137,8 +90,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
             @Override
             public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
-                if (mNestedScrollView == null || mRelativeLayout == null) return;
-                setBackgroundImageHeight(mRelativeLayout.getMeasuredHeight() - mNestedScrollView.getScrollY() - offset);
+
+                setBackgroundImageHeight(mBinding.rlUserInfo.getMeasuredHeight() - mBinding.nestScrollView.getScrollY() - offset);
             }
 
             @Override
@@ -171,7 +124,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
             }
         });
-        mSmartRefreshUtil = SmartRefreshUtil.with(mSmartRefreshLayout)
+        SmartRefreshUtil.with(mBinding.meSmartRefresh)
                 .pureScrollMode();
     }
 
@@ -182,7 +135,14 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     @Override
     protected void initListener() {
-
+        mBinding.llCoin.setOnClickListener(this);
+        mBinding.llAboutMe.setOnClickListener(this);
+        mBinding.llShare.setOnClickListener(this);
+        mBinding.llCollect.setOnClickListener(this);
+        mBinding.llReadLater.setOnClickListener(this);
+        mBinding.llReadRecord.setOnClickListener(this);
+        mBinding.llOpen.setOnClickListener(this);
+        mBinding.llSetting.setOnClickListener(this);
     }
 
     @Override
@@ -191,15 +151,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     }
 
     private void setBackgroundImageHeight(int h) {
-        if (mImageView == null) {
-            return;
-        }
-        if (h >= 0) {
-            mImageView.getLayoutParams().height = h;
-        } else {
-            mImageView.getLayoutParams().height = 0;
-        }
-        mImageView.requestLayout();
+        mBinding.backgroundImg.getLayoutParams().height = Math.max(h, 0);
+        mBinding.backgroundImg.requestLayout();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -213,67 +166,50 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     private void changeUserInfo() {
         if (UserInfoUtils.getInstance().isLogin()){
             LoginBean bean = UserInfoUtils.getInstance().getLoginBean();
-            mUserName.setText(bean.getUsername());
-            mUserId.setVisibility(View.VISIBLE);
-            mUserId.setText(bean.getId()+"");
+            mBinding.tvUserName.setText(bean.getUsername());
+            mBinding.tvUserId.setVisibility(View.VISIBLE);
+            mBinding.tvUserId.setText(bean.getId()+"");
             System.out.println(bean.toJson());
         }
     }
 
-    private void setRefresh(){
-        if (UserInfoUtils.getInstance().isLogin()){
-            mSmartRefreshUtil.setRefreshListener(new SmartRefreshUtil.RefreshListener() {
-                @Override
-                public void onRefresh() {
+//    private void setRefresh(){
+//        if (UserInfoUtils.getInstance().isLogin()){
+//            mSmartRefreshUtil.setRefreshListener(new SmartRefreshUtil.RefreshListener() {
+//                @Override
+//                public void onRefresh() {
+//
+//                }
+//            });
+//        }
+//    }
 
-                }
-            });
-        }
-    }
-
-    @OnClick({
-            R.id.ll_coin, R.id.ll_about_me, R.id.ll_share,
-            R.id.ll_collect, R.id.ll_read_later, R.id.ll_read_record,
-            R.id.ll_open, R.id.ll_setting
-    })
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-    }
 
     @Override
     protected void disContinuousClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_coin:
-                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
-                    CoinActivity.start(getContext());
-                }
-                break;
-            case R.id.ll_about_me:
-                AboutMeActivity.start(getContext());
-                break;
-            case R.id.ll_share:
-                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
-                    ShareActivity.start(getContext());
-                }
-                break;
-            case R.id.ll_collect:
-                if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
-                    CollectActivity.start(getContext());
-                }
-                break;
-            case R.id.ll_read_later:
-                ReadLaterActivity.start(getContext());
-                break;
-            case R.id.ll_read_record:
-                ReadRecordActivity.start(getContext());
-                break;
-            case R.id.ll_open:
-                OpenActivity.start(getContext());
-                break;
-            case R.id.ll_setting:
-                SettingActivity.start(getContext());
-                break;
+        int id = view.getId();
+        if (id == R.id.ll_coin) {
+            if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
+                CoinActivity.start(getContext());
+            }
+        } else if (id == R.id.ll_about_me) {
+            AboutMeActivity.start(getContext());
+        } else if (id == R.id.ll_share) {
+            if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
+                ShareActivity.start(getContext());
+            }
+        } else if (id == R.id.ll_collect) {
+            if (UserInfoUtils.getInstance().loginIfNot(getContext())) {
+                CollectActivity.start(getContext());
+            }
+        } else if (id == R.id.ll_read_later) {
+            ReadLaterActivity.start(getContext());
+        } else if (id == R.id.ll_read_record) {
+            ReadRecordActivity.start(getContext());
+        } else if (id == R.id.ll_open) {
+            OpenActivity.start(getContext());
+        } else if (id == R.id.ll_setting) {
+            SettingActivity.start(getContext());
         }
     }
 }

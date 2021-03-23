@@ -7,8 +7,10 @@ package com.crystallake.wanandroid.module.main.activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.crystallake.wanandroid.R;
+import androidx.viewbinding.ViewBinding;
+
 import com.crystallake.basic.base.activity.BaseMvpActivity;
+import com.crystallake.wanandroid.databinding.ActivityShareArticleBinding;
 import com.crystallake.wanandroid.module.main.mvp.contract.ShareArticleContract;
 import com.crystallake.wanandroid.module.main.mvp.presenter.ShareArticlePresenter;
 
@@ -35,11 +37,6 @@ public class ShareArticleActivity extends BaseMvpActivity<ShareArticlePresenter>
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_share_article;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -47,6 +44,11 @@ public class ShareArticleActivity extends BaseMvpActivity<ShareArticlePresenter>
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView() {
+        return ActivityShareArticleBinding.inflate(getLayoutInflater());
     }
 
     @Override

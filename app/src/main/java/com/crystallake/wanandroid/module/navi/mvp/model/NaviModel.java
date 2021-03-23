@@ -22,12 +22,7 @@ public class NaviModel extends BaseModel implements NaviContract.NaviModel {
     public Observable<List<NaviBean>> getNaviList() {
         return RetrofitHelper.getRetrofitService()
                 .getNaviList()
-                .map(new Function<WanResponse<List<NaviBean>>, List<NaviBean>>() {
-                    @Override
-                    public List<NaviBean> apply(WanResponse<List<NaviBean>> response) throws Throwable {
-                        return response.getData();
-                    }
-                })
+                .map(WanResponse::getData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

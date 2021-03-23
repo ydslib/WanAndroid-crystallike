@@ -4,38 +4,29 @@
  */
 package com.crystallake.wanandroid.module.question.fragment;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-import com.crystallake.wanandroid.R;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewbinding.ViewBinding;
+
 import com.crystallake.basic.base.fragment.BaseMvpFragment;
 import com.crystallake.wanandroid.adapter.ArticleAdapter;
+import com.crystallake.wanandroid.databinding.FragmentQuestionBinding;
 import com.crystallake.wanandroid.module.main.mvp.bean.ArticleListBean;
 import com.crystallake.wanandroid.module.question.mvp.contract.QuestionContract;
 import com.crystallake.wanandroid.module.question.mvp.presenter.QuestionPresenter;
 import com.crystallake.wanandroid.utils.SmartRefreshUtil;
 import com.kennyc.view.MultiStateView;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-
-import butterknife.BindView;
-import per.goweii.actionbarex.common.ActionBarCommon;
 
 public class QuestionFragment extends BaseMvpFragment<QuestionPresenter> implements QuestionContract.QuestionView {
 
 
     private static final int PAGE_START = 1;
-
-    @BindView(R.id.question_action_bar)
-    ActionBarCommon mBarCommon;
-    @BindView(R.id.question_multistateview)
-    MultiStateView mMultiStateView;
-    @BindView(R.id.question_smart_refresh)
-    SmartRefreshLayout mSmartRefreshLayout;
-    @BindView(R.id.question_recycler)
-    RecyclerView mRecyclerView;
-
     private SmartRefreshUtil mSmartRefreshUtil;
     private ArticleAdapter mArticleAdapter;
+
+    private FragmentQuestionBinding mBinding;
 
     private int mCurrPage = PAGE_START;
 
@@ -48,32 +39,20 @@ public class QuestionFragment extends BaseMvpFragment<QuestionPresenter> impleme
         return new QuestionPresenter();
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_question;
-    }
 
     @Override
     protected void initView() {
-        mSmartRefreshUtil = SmartRefreshUtil.with(mSmartRefreshLayout)
+        mSmartRefreshUtil = SmartRefreshUtil.with(mBinding.questionSmartRefresh)
                 .pureScrollMode()
-                .setRefreshListener(new SmartRefreshUtil.RefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        mCurrPage = PAGE_START;
-                        getQuestionList(true);
-                    }
+                .setRefreshListener(() -> {
+                    mCurrPage = PAGE_START;
+                    getQuestionList(true);
                 })
-                .setLoadMoreListener(new SmartRefreshUtil.LoadMoreListener() {
-                    @Override
-                    public void onLoadMore() {
-                        getQuestionList(true);
-                    }
-                });
+                .setLoadMoreListener(() -> getQuestionList(true));
 
         mArticleAdapter = new ArticleAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mArticleAdapter);
+        mBinding.questionRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.questionRecycler.setAdapter(mArticleAdapter);
 
     }
 
@@ -88,18 +67,24 @@ public class QuestionFragment extends BaseMvpFragment<QuestionPresenter> impleme
     }
 
     @Override
+    protected ViewBinding bindView(LayoutInflater inflater, ViewGroup container) {
+        mBinding = FragmentQuestionBinding.inflate(inflater, container, false);
+        return mBinding;
+    }
+
+    @Override
     public void showMsg(String msg) {
 
     }
 
     @Override
     public void showLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.LOADING);
+        mBinding.questionMultistateview.setViewState(MultiStateView.ViewState.LOADING);
     }
 
     @Override
     public void hideLoading() {
-        mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+        mBinding.questionMultistateview.setViewState(MultiStateView.ViewState.CONTENT);
     }
 
     @Override
@@ -107,10 +92,10 @@ public class QuestionFragment extends BaseMvpFragment<QuestionPresenter> impleme
         mCurrPage = bean.getCurPage() + PAGE_START;
         if (mCurrPage == 1) {
             if (bean.getDatas() != null && !bean.getDatas().isEmpty()) {
-                mMultiStateView.setViewState(MultiStateView.ViewState.CONTENT);
+                mBinding.questionMultistateview.setViewState(MultiStateView.ViewState.CONTENT);
                 mArticleAdapter.setNewInstance(bean.getDatas());
             } else {
-                mMultiStateView.setViewState(MultiStateView.ViewState.EMPTY);
+                mBinding.questionMultistateview.setViewState(MultiStateView.ViewState.EMPTY);
             }
         } else {
             mArticleAdapter.addData(bean.getDatas());
@@ -131,7 +116,7 @@ public class QuestionFragment extends BaseMvpFragment<QuestionPresenter> impleme
     @Override
     protected void onVisible(boolean isFirstVisible) {
         super.onVisible(isFirstVisible);
-        if (isFirstVisible){
+        if (isFirstVisible) {
             mCurrPage = PAGE_START;
             getQuestionList(false);
         }

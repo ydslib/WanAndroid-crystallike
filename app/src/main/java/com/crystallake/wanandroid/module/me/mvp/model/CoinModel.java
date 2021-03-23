@@ -11,7 +11,6 @@ import com.crystallake.wanandroid.module.me.mvp.contract.CoinContract;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CoinModel extends BaseModel implements CoinContract.CoinModel {
@@ -19,12 +18,7 @@ public class CoinModel extends BaseModel implements CoinContract.CoinModel {
     public Observable<Integer> getCoin() {
         return RetrofitHelper.getRetrofitService()
                 .getCoin()
-                .map(new Function<WanResponse<Integer>, Integer>() {
-                    @Override
-                    public Integer apply(WanResponse<Integer> response) throws Throwable {
-                        return response.getData();
-                    }
-                })
+                .map(WanResponse::getData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

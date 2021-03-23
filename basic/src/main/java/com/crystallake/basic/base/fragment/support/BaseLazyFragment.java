@@ -43,11 +43,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) {
-            dispatchUserVisibleHint(false);
-        } else {
-            dispatchUserVisibleHint(true);
-        }
+        dispatchUserVisibleHint(!hidden);
     }
 
     @Override

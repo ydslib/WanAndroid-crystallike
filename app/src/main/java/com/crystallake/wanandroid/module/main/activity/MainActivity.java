@@ -3,28 +3,23 @@ package com.crystallake.wanandroid.module.main.activity;
 
 import android.os.Bundle;
 
+import androidx.viewbinding.ViewBinding;
 import androidx.viewpager.widget.ViewPager;
 
-import com.crystallake.wanandroid.R;
 import com.crystallake.basic.base.activity.BaseMvpActivity;
 import com.crystallake.wanandroid.adapter.FixedFragmentPagerAdapter;
+import com.crystallake.wanandroid.databinding.ActivityMainBinding;
 import com.crystallake.wanandroid.module.main.fragment.UserArticleFragment;
 import com.crystallake.wanandroid.module.main.fragment.MainFragment;
 import com.crystallake.wanandroid.module.main.mvp.contract.MainContract;
 import com.crystallake.wanandroid.module.main.mvp.presenter.MainPresenter;
 
-import butterknife.BindView;
 
 public class MainActivity extends BaseMvpActivity<MainPresenter>
         implements MainContract.MainView, ViewPager.OnPageChangeListener {
 
-    @BindView(R.id.main_view_pager)
-    ViewPager mViewPager;
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_main;
-    }
+    private ActivityMainBinding mBinding;
 
     @Override
     protected MainPresenter createPresenter() {
@@ -33,11 +28,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter>
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        mViewPager.addOnPageChangeListener(this);
+        mBinding.mainViewPager.addOnPageChangeListener(this);
         FixedFragmentPagerAdapter adapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
         adapter.setFragments(UserArticleFragment.create(), MainFragment.create());
-        mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(1);
+        mBinding.mainViewPager.setAdapter(adapter);
+        mBinding.mainViewPager.setCurrentItem(1);
     }
 
     @Override
@@ -48,6 +43,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter>
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected ViewBinding bindView() {
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        return mBinding;
     }
 
     @Override
